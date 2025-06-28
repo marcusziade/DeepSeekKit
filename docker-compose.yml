@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Development environment
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - swift-build-cache:/app/.build
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+    command: swift build
+
+  # Test runner
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - swift-build-cache:/app/.build
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+    command: swift test --enable-code-coverage
+
+  # CLI runtime
+  cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+    stdin_open: true
+    tty: true
+
+  # Documentation generator
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - ./docs:/app/.build/documentation
+    command: swift package generate-documentation --disable-indexing --output-path /app/docs
+
+volumes:
+  swift-build-cache:
