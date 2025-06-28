@@ -176,7 +176,13 @@ enum JSONValue: Codable {
 // Extension to check if NSNumber is a Bool
 extension NSNumber {
     var isBool: Bool {
+        #if os(Linux)
+        // On Linux, check the objCType
+        let boolID = String(cString: self.objCType)
+        return boolID == "c" || boolID == "B"
+        #else
         return CFBooleanGetTypeID() == CFGetTypeID(self)
+        #endif
     }
 }
 
