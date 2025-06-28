@@ -30,17 +30,17 @@
             }
             
             @Step {
-                Create a reasoning viewer UI.
+                Analyze reasoning patterns.
                 
-                @Code(name: "ReasonerBasics.swift", file: reasoning-03-viewer.swift) {
-                    Display reasoning steps alongside the answer.
+                @Code(name: "ReasonerBasics.swift", file: reasoning-03-analysis.swift) {
+                    Analyze and understand reasoning patterns.
                 }
             }
             
             @Step {
-                Handle both reasoning and final answer.
+                Display reasoning content.
                 
-                @Code(name: "ReasonerBasics.swift", file: reasoning-04-both.swift) {
+                @Code(name: "ReasonerBasics.swift", file: reasoning-04-display.swift) {
                     Show users how the AI thinks and what it concludes.
                 }
             }
@@ -62,26 +62,26 @@
             }
             
             @Step {
-                Format mathematical reasoning steps.
+                Navigate through reasoning steps.
                 
-                @Code(name: "MathTutor.swift", file: reasoning-06-format.swift) {
+                @Code(name: "MathTutor.swift", file: reasoning-06-steps.swift) {
                     Present math steps in a clear, educational format.
                 }
             }
             
             @Step {
-                Add step-by-step navigation.
+                Add validation for solutions.
                 
-                @Code(name: "MathTutor.swift", file: reasoning-07-steps.swift) {
-                    Let students explore each reasoning step.
+                @Code(name: "MathTutor.swift", file: reasoning-07-validation.swift) {
+                    Validate student solutions against reasoning.
                 }
             }
             
             @Step {
-                Implement practice problem generation.
+                Compare different solution approaches.
                 
-                @Code(name: "MathTutor.swift", file: reasoning-08-practice.swift) {
-                    Generate similar problems based on reasoning patterns.
+                @Code(name: "MathTutor.swift", file: reasoning-08-comparison.swift) {
+                    Show multiple ways to solve problems.
                 }
             }
         }
@@ -96,32 +96,32 @@
         
         @Steps {
             @Step {
-                Build a code analyzer interface.
+                Build an enhanced tutor interface.
                 
-                @Code(name: "CodeAnalyzer.swift", file: reasoning-09-analyzer.swift)
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-09-tutor.swift)
             }
             
             @Step {
-                Extract and display complexity analysis.
+                Create a comprehensive analyzer.
                 
-                @Code(name: "CodeAnalyzer.swift", file: reasoning-10-complexity.swift) {
-                    Show how the AI analyzes algorithmic complexity.
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-10-analyzer.swift) {
+                    Show how the AI analyzes code patterns.
                 }
             }
             
             @Step {
-                Implement improvement suggestions.
+                Support decision-making processes.
                 
-                @Code(name: "CodeAnalyzer.swift", file: reasoning-11-improvements.swift) {
-                    Provide justified code improvements.
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-11-decisions.swift) {
+                    Help make informed coding decisions.
                 }
             }
             
             @Step {
-                Create a code review assistant.
+                Build an evaluator for code quality.
                 
-                @Code(name: "CodeAnalyzer.swift", file: reasoning-12-review.swift) {
-                    Automated code reviews with reasoning.
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-12-evaluator.swift) {
+                    Evaluate code quality with reasoning.
                 }
             }
         }
@@ -136,24 +136,24 @@
         
         @Steps {
             @Step {
-                Create a decision analysis framework.
+                Create a reasoning debugger.
                 
-                @Code(name: "DecisionSupport.swift", file: reasoning-13-framework.swift)
+                @Code(name: "DecisionSupport.swift", file: reasoning-13-debugger.swift)
             }
             
             @Step {
-                Visualize pros and cons reasoning.
+                Build an optimizer for decisions.
                 
-                @Code(name: "DecisionSupport.swift", file: reasoning-14-proscons.swift) {
-                    Show balanced analysis of options.
+                @Code(name: "DecisionSupport.swift", file: reasoning-14-optimizer.swift) {
+                    Optimize decision-making processes.
                 }
             }
             
             @Step {
-                Add confidence scoring to reasoning.
+                Add an explainer for reasoning.
                 
-                @Code(name: "DecisionSupport.swift", file: reasoning-15-confidence.swift) {
-                    Extract confidence levels from reasoning.
+                @Code(name: "DecisionSupport.swift", file: reasoning-15-explainer.swift) {
+                    Explain complex reasoning in simple terms.
                 }
             }
             

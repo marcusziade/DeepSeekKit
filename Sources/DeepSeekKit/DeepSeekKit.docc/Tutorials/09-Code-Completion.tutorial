@@ -1,4 +1,4 @@
-@Tutorial(time: 20) {
+@Tutorial(time: 10) {
     @Intro(title: "Code Completion with Fill-in-Middle") {
         Leverage DeepSeek's Fill-in-Middle (FIM) capability to build intelligent code completion features. Learn how to provide context-aware code suggestions in your development tools.
         
@@ -37,137 +37,11 @@
                 }
             }
             
-            @Step {
-                Configure completion parameters.
-                
-                @Code(name: "FIMBasics.swift", file: fim-04-parameters.swift) {
-                    Fine-tune completion behavior.
-                }
-            }
         }
     }
     
-    @Section(title: "Building a Code Editor Extension") {
-        @ContentAndMedia {
-            Create a code editor extension that provides intelligent completions as developers type. We'll build a SwiftUI-based code editor with FIM integration.
-            
-            @Image(source: code-editor.png, alt: "Code editor with completions")
-        }
-        
-        @Steps {
-            @Step {
-                Create a code editor view.
-                
-                @Code(name: "CodeEditor.swift", file: fim-05-editor.swift)
-            }
-            
-            @Step {
-                Detect completion trigger points.
-                
-                @Code(name: "CodeEditor.swift", file: fim-06-triggers.swift) {
-                    Identify when to suggest completions.
-                }
-            }
-            
-            @Step {
-                Extract prefix and suffix context.
-                
-                @Code(name: "CodeEditor.swift", file: fim-07-context.swift) {
-                    Gather surrounding code for better suggestions.
-                }
-            }
-            
-            @Step {
-                Display inline completion suggestions.
-                
-                @Code(name: "CodeEditor.swift", file: fim-08-inline.swift) {
-                    Show ghost text for completions.
-                }
-            }
-        }
-    }
     
-    @Section(title: "Smart Completion Strategies") {
-        @ContentAndMedia {
-            Implement advanced strategies to provide relevant, timely completions that enhance developer productivity without being intrusive.
-            
-            @Image(source: smart-completions.png, alt: "Smart completion strategies")
-        }
-        
-        @Steps {
-            @Step {
-                Implement debounced completion requests.
-                
-                @Code(name: "SmartCompletion.swift", file: fim-09-debounce.swift) {
-                    Avoid overwhelming the API with requests.
-                }
-            }
-            
-            @Step {
-                Add multi-line completion support.
-                
-                @Code(name: "SmartCompletion.swift", file: fim-10-multiline.swift) {
-                    Complete entire functions or blocks.
-                }
-            }
-            
-            @Step {
-                Cache and rank completions.
-                
-                @Code(name: "SmartCompletion.swift", file: fim-11-cache.swift) {
-                    Improve performance with smart caching.
-                }
-            }
-            
-            @Step {
-                Implement completion filtering.
-                
-                @Code(name: "SmartCompletion.swift", file: fim-12-filter.swift) {
-                    Show only relevant suggestions.
-                }
-            }
-        }
-    }
     
-    @Section(title: "Building a Code Assistant") {
-        @ContentAndMedia {
-            Create a comprehensive code assistant that combines FIM with chat capabilities for a complete development companion.
-            
-            @Image(source: code-assistant.png, alt: "Integrated code assistant")
-        }
-        
-        @Steps {
-            @Step {
-                Design the assistant interface.
-                
-                @Code(name: "CodeAssistant.swift", file: fim-13-assistant.swift)
-            }
-            
-            @Step {
-                Integrate completion with explanation.
-                
-                @Code(name: "CodeAssistant.swift", file: fim-14-explain.swift) {
-                    Combine FIM with chat for explanations.
-                }
-            }
-            
-            @Step {
-                Add code refactoring suggestions.
-                
-                @Code(name: "CodeAssistant.swift", file: fim-15-refactor.swift) {
-                    Suggest improvements using FIM.
-                }
-            }
-            
-            @Step {
-                Implement test generation.
-                
-                @Code(name: "CodeAssistant.swift", file: fim-16-tests.swift) {
-                    Generate tests based on implementation.
-                }
-            }
-        }
-    }
     
     @Assessments {
         @MultipleChoice {
