@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   build-macos:
@@ -25,7 +25,7 @@ jobs:
         tar -czf deepseek-cli-macos.tar.gz deepseek-cli-macos
     
     - name: Upload macOS artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: deepseek-cli-macos
         path: deepseek-cli-macos.tar.gz
@@ -53,7 +53,7 @@ jobs:
         tar -czf deepseek-cli-linux.tar.gz deepseek-cli-linux
     
     - name: Upload Linux artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: deepseek-cli-linux
         path: deepseek-cli-linux.tar.gz
@@ -62,15 +62,18 @@ jobs:
     name: Create GitHub Release
     needs: [build-macos, build-linux]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
     
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
     
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
+        name: ${{ github.ref_name }}
         files: |
           deepseek-cli-macos/deepseek-cli-macos.tar.gz
           deepseek-cli-linux/deepseek-cli-linux.tar.gz
