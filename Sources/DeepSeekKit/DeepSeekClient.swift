@@ -43,12 +43,20 @@ public final class DeepSeekClient: DeepSeekProtocol {
         
         let networking = URLSessionNetworking(session: session)
         let requestBuilder = RequestBuilder(baseURL: baseURL, apiKey: apiKey)
-        let streamingHandler = CURLStreamingHandler(apiKey: apiKey)
+        
+        // Use platform-specific streaming handler
+        let streamingHandler: StreamingHandler
+        #if os(Linux)
+        streamingHandler = CURLStreamingHandler()
+        #else
+        streamingHandler = URLSessionStreamingHandler()
+        #endif
         
         self.chat = ChatService(
             networking: networking,
             requestBuilder: requestBuilder,
-            streamingHandler: streamingHandler
+            streamingHandler: streamingHandler,
+            apiKey: apiKey
         )
         
         self.models = ModelService(

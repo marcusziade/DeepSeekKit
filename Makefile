@@ -48,10 +48,6 @@ docker-cli:
 format:
 	swift-format -i -r Sources Tests
 
-# Lint code
-lint:
-	swiftlint lint --strict
-
 # Run example
 example:
 	DEEPSEEK_API_KEY=$${DEEPSEEK_API_KEY} swift run deepseek-cli chat "Hello"

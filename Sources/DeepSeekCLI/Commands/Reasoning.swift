@@ -39,15 +39,10 @@ struct Reasoning: AsyncParsableCommand {
         print("-" * 60)
         print()
         
-        do {
-            if stream {
-                await streamReasoning(client: client, request: request)
-            } else {
-                await nonStreamReasoning(client: client, request: request)
-            }
-        } catch {
-            print("\nError: \(error.localizedDescription)")
-            throw ExitCode.failure
+        if stream {
+            await streamReasoning(client: client, request: request)
+        } else {
+            await nonStreamReasoning(client: client, request: request)
         }
     }
     

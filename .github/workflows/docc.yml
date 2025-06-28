@@ -1,0 +1,56 @@
+name: DocC
+
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_15.2.app
+    
+    - name: Resolve Package Dependencies
+      run: |
+        xcodebuild -resolvePackageDependencies \
+          -scheme DeepSeekKit \
+          -derivedDataPath /tmp/docbuild
+    
+    - name: Build Documentation
+      run: |
+        xcodebuild docbuild \
+          -scheme DeepSeekKit \
+          -derivedDataPath /tmp/docbuild \
+          -destination 'platform=macOS'
+    
+    - name: Process Documentation Archive
+      run: |
+        xcrun docc process-archive transform-for-static-hosting \
+          /tmp/docbuild/Build/Products/Debug/DeepSeekKit.doccarchive \
+          --output-path docs \
+          --hosting-base-path DeepSeekKit
+    
+    - name: Create Redirect Index
+      run: |
+        echo '<script>window.location.href += "/documentation/deepseekkit"</script>' > docs/index.html
+    
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'docs'
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

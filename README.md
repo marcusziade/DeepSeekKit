@@ -1,23 +1,25 @@
 # DeepSeekKit
 
 [![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
-[![Platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20Linux-blue.svg)](https://swift.org)
+[![Platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20visionOS%20%7C%20Linux-blue.svg)](https://swift.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![CI](https://github.com/marcusziade/DeepSeekKit/actions/workflows/ci.yml/badge.svg)](https://github.com/marcusziade/DeepSeekKit/actions/workflows/ci.yml)
+[![Documentation](https://img.shields.io/badge/Documentation-DocC-orange)](https://marcusziade.github.io/DeepSeekKit/documentation/deepseekkit/)
 [![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 
-A comprehensive, production-ready Swift SDK for the DeepSeek API with full Linux support, protocol-oriented design, and complete feature coverage.
+A comprehensive, production-ready Swift SDK for the DeepSeek API with full support for all Apple platforms and Linux, protocol-oriented design, and complete feature coverage.
 
 ## Features
 
 - ✅ **Complete API Coverage**: All DeepSeek API endpoints implemented
 - 🚀 **Protocol-Oriented Design**: Clean, testable, and extensible architecture
-- 🌊 **True HTTP Streaming**: cURL-based streaming for real-time responses
-- 🐧 **Cross-Platform**: Full support for macOS and Linux
+- 🌊 **Native Streaming**: URLSession streaming on Apple platforms, cURL on Linux
+- 📱 **All Apple Platforms**: macOS, iOS, tvOS, watchOS, visionOS, and Mac Catalyst
+- 🐧 **Linux Support**: Full compatibility with Swift on Linux
 - 🔧 **Type-Safe**: Leverages Swift's type system for safe API interactions
 - 📦 **Swift Package Manager**: Easy integration into your projects
 - 🧪 **Well-Tested**: Comprehensive unit tests for reliability
-- 📝 **DocC Documentation**: Rich API documentation
+- 📝 **DocC Documentation**: Rich API documentation with GitHub Pages hosting
 - 🛠 **CLI Tool**: Feature-complete command-line interface for testing
 
 ## Supported Features
@@ -35,8 +37,8 @@ A comprehensive, production-ready Swift SDK for the DeepSeek API with full Linux
 ## Requirements
 
 - Swift 5.9+
-- macOS 13+ / Linux (Ubuntu 20.04+)
-- cURL (for streaming support)
+- **Apple Platforms**: macOS 13+, iOS 16+, tvOS 16+, watchOS 9+, visionOS 1+
+- **Linux**: Ubuntu 20.04+ with cURL for streaming support
 
 ## Installation
 

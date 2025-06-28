@@ -35,6 +35,9 @@ public enum DeepSeekError: LocalizedError, Sendable {
     /// Streaming error.
     case streamingError(String)
     
+    /// HTTP error with status code.
+    case httpError(statusCode: Int)
+    
     public var errorDescription: String? {
         switch self {
         case .invalidAPIKey:
@@ -59,6 +62,8 @@ public enum DeepSeekError: LocalizedError, Sendable {
             return "Request timed out"
         case .streamingError(let message):
             return "Streaming error: \(message)"
+        case .httpError(let statusCode):
+            return "HTTP error: \(statusCode)"
         }
     }
 }

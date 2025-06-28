@@ -4,16 +4,19 @@ import Foundation
 final class ChatService: ChatServiceProtocol {
     private let networking: NetworkingProtocol
     private let requestBuilder: RequestBuilder
-    private let streamingHandler: CURLStreamingHandler
+    private let streamingHandler: StreamingHandler
+    private let apiKey: String
     
     init(
         networking: NetworkingProtocol,
         requestBuilder: RequestBuilder,
-        streamingHandler: CURLStreamingHandler
+        streamingHandler: StreamingHandler,
+        apiKey: String
     ) {
         self.networking = networking
         self.requestBuilder = requestBuilder
         self.streamingHandler = streamingHandler
+        self.apiKey = apiKey
     }
     
     func createCompletion(_ request: ChatCompletionRequest) async throws -> ChatCompletionResponse {
@@ -44,7 +47,7 @@ final class ChatService: ChatServiceProtocol {
     
     func createStreamingCompletion(_ request: ChatCompletionRequest) -> AsyncThrowingStream<ChatCompletionChunk, Error> {
         let baseURL = URL(string: "https://api.deepseek.com/v1")!
-        return streamingHandler.streamChatCompletion(request, baseURL: baseURL)
+        return streamingHandler.streamChatCompletion(request, apiKey: apiKey, baseURL: baseURL)
     }
     
     func createCompletion(_ request: CompletionRequest) async throws -> CompletionResponse {

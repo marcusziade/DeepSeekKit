@@ -1,18 +1,18 @@
+#if os(Linux)
 import Foundation
 
-/// Handles streaming responses using cURL for true HTTP streaming support.
-final class CURLStreamingHandler {
-    private let apiKey: String
+/// Handles streaming responses using cURL for true HTTP streaming support on Linux.
+public final class CURLStreamingHandler: StreamingHandler {
     private let decoder: JSONDecoder
     
-    init(apiKey: String, decoder: JSONDecoder = JSONDecoder()) {
-        self.apiKey = apiKey
+    public init(decoder: JSONDecoder = JSONDecoder()) {
         self.decoder = decoder
     }
     
     /// Creates a streaming completion using cURL.
-    func streamChatCompletion(
+    public func streamChatCompletion(
         _ request: ChatCompletionRequest,
+        apiKey: String,
         baseURL: URL
     ) -> AsyncThrowingStream<ChatCompletionChunk, Error> {
         AsyncThrowingStream { continuation in
@@ -145,3 +145,4 @@ final class CURLStreamingHandler {
         return nil
     }
 }
+#endif

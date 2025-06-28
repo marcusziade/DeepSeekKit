@@ -86,18 +86,6 @@ jobs:
     - name: Run tests in Docker
       run: docker run --rm -v $(pwd):/app deepseek-kit-test swift test
 
-  lint:
-    name: SwiftLint
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install SwiftLint
-      run: brew install swiftlint
-    
-    - name: Run SwiftLint
-      run: swiftlint lint --strict || true
-
   documentation:
     name: Build Documentation
     runs-on: macos-latest
