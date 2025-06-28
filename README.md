@@ -57,7 +57,7 @@ let reasoning = try await client.chat.createCompletion(
 - 🚀 Native streaming on all platforms
 - 🛠 Function calling for AI agents
 - 🧠 Reasoning model with step-by-step explanations
-- 📱 All Apple platforms + Linux
+- 📱 macOS, iOS, tvOS, watchOS, visionOS, Mac Catalyst, Linux
 - 📦 Zero dependencies
 - 🔧 Type-safe API
 
