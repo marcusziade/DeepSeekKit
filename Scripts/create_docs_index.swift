@@ -284,9 +284,9 @@ let indexHTML = """
                         <span>📖</span>
                         View Documentation
                     </a>
-                    <a href="documentation/deepseekkit/tutorials/deepseekkit-tutorials" class="button button-secondary">
+                    <a href="documentation/deepseekkit" class="button button-secondary">
                         <span>🎓</span>
-                        Start Tutorial
+                        Browse Tutorials
                     </a>
                 </div>
             </div>
