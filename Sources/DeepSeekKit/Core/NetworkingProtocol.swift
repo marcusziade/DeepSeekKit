@@ -1,4 +1,7 @@
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 /// Protocol defining the networking interface for API requests.
 ///

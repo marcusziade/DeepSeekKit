@@ -1,4 +1,7 @@
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 /// URLSession-based implementation of the networking protocol.
 final class URLSessionNetworking: NetworkingProtocol {
@@ -41,38 +44,50 @@ final class URLSessionNetworking: NetworkingProtocol {
     
     func performRaw(_ request: URLRequest) async throws -> Data {
         do {
-            let (data, response) = try await session.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw DeepSeekError.networkError(URLError(.badServerResponse))
-            }
-            
-            switch httpResponse.statusCode {
-            case 200...299:
-                // Check for empty response which might indicate endpoint not available
-                if data.isEmpty {
-                    throw DeepSeekError.apiError(APIError(
-                        type: "endpoint_not_available",
-                        message: "This endpoint may not be available yet",
-                        code: nil,
-                        param: nil
-                    ))
+            return try await withCheckedThrowingContinuation { continuation in
+                let task = session.dataTask(with: request) { data, response, error in
+                    if let error = error {
+                        continuation.resume(throwing: DeepSeekError.networkError(error))
+                        return
+                    }
+                    
+                    guard let data = data,
+                          let httpResponse = response as? HTTPURLResponse else {
+                        continuation.resume(throwing: DeepSeekError.networkError(URLError(.badServerResponse)))
+                        return
+                    }
+                    
+                    switch httpResponse.statusCode {
+                    case 200...299:
+                        // Check for empty response which might indicate endpoint not available
+                        if data.isEmpty {
+                            continuation.resume(throwing: DeepSeekError.apiError(APIError(
+                                type: "endpoint_not_available",
+                                message: "This endpoint may not be available yet",
+                                code: nil,
+                                param: nil
+                            )))
+                            return
+                        }
+                        continuation.resume(returning: data)
+                    case 401:
+                        continuation.resume(throwing: DeepSeekError.invalidAPIKey)
+                    case 402:
+                        continuation.resume(throwing: DeepSeekError.insufficientBalance)
+                    case 429:
+                        continuation.resume(throwing: DeepSeekError.rateLimitExceeded)
+                    case 503:
+                        continuation.resume(throwing: DeepSeekError.serviceUnavailable)
+                    default:
+                        // Try to decode error response
+                        if let errorResponse = try? self.decoder.decode(ErrorResponse.self, from: data) {
+                            continuation.resume(throwing: DeepSeekError.apiError(errorResponse.error))
+                        } else {
+                            continuation.resume(throwing: DeepSeekError.networkError(URLError(.badServerResponse)))
+                        }
+                    }
                 }
-                return data
-            case 401:
-                throw DeepSeekError.invalidAPIKey
-            case 402:
-                throw DeepSeekError.insufficientBalance
-            case 429:
-                throw DeepSeekError.rateLimitExceeded
-            case 503:
-                throw DeepSeekError.serviceUnavailable
-            default:
-                // Try to decode error response
-                if let errorResponse = try? decoder.decode(ErrorResponse.self, from: data) {
-                    throw DeepSeekError.apiError(errorResponse.error)
-                }
-                throw DeepSeekError.networkError(URLError(.badServerResponse))
+                task.resume()
             }
         } catch let error as DeepSeekError {
             throw error

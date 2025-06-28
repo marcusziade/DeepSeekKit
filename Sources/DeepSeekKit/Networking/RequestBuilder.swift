@@ -1,4 +1,7 @@
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 /// Builds URLRequest objects for the DeepSeek API.
 struct RequestBuilder {
