@@ -81,9 +81,6 @@ deepseek-cli balance
 # Build and run
 docker build -t deepseek-kit .
 docker run --rm -e DEEPSEEK_API_KEY="your-key" deepseek-kit chat "Hello from Docker!"
-
-# Verify installation
-./Scripts/verify-docker.sh
 ```
 
 ## Documentation
