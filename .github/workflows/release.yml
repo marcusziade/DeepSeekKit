@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-macos:
+    name: Build macOS Release
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_15.2.app
+    
+    - name: Build Release
+      run: swift build -c release
+    
+    - name: Create macOS binary
+      run: |
+        cp .build/release/deepseek-cli ./deepseek-cli-macos
+        chmod +x ./deepseek-cli-macos
+        tar -czf deepseek-cli-macos.tar.gz deepseek-cli-macos
+    
+    - name: Upload macOS artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: deepseek-cli-macos
+        path: deepseek-cli-macos.tar.gz
+
+  build-linux:
+    name: Build Linux Release
+    runs-on: ubuntu-latest
+    container:
+      image: swift:5.9-jammy
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        apt-get update
+        apt-get install -y curl libcurl4-openssl-dev
+    
+    - name: Build Release
+      run: swift build -c release
+    
+    - name: Create Linux binary
+      run: |
+        cp .build/release/deepseek-cli ./deepseek-cli-linux
+        chmod +x ./deepseek-cli-linux
+        tar -czf deepseek-cli-linux.tar.gz deepseek-cli-linux
+    
+    - name: Upload Linux artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: deepseek-cli-linux
+        path: deepseek-cli-linux.tar.gz
+
+  create-release:
+    name: Create GitHub Release
+    needs: [build-macos, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          deepseek-cli-macos/deepseek-cli-macos.tar.gz
+          deepseek-cli-linux/deepseek-cli-linux.tar.gz
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
