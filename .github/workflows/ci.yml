@@ -1,0 +1,145 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-macos:
+    name: Test on macOS
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_15.2.app
+    
+    - name: Swift version
+      run: swift --version
+    
+    - name: Build
+      run: swift build -v
+    
+    - name: Run tests
+      run: swift test -v --enable-code-coverage
+    
+    - name: Generate coverage report
+      run: |
+        xcrun llvm-cov export \
+          .build/debug/DeepSeekKitPackageTests.xctest/Contents/MacOS/DeepSeekKitPackageTests \
+          -instr-profile .build/debug/codecov/default.profdata \
+          -format lcov > coverage.lcov
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.lcov
+        flags: macos
+        name: macos-coverage
+        fail_ci_if_error: false
+
+  test-linux:
+    name: Test on Linux
+    runs-on: ubuntu-latest
+    container:
+      image: swift:5.9-jammy
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        apt-get update
+        apt-get install -y curl libcurl4-openssl-dev
+    
+    - name: Build
+      run: swift build -v
+    
+    - name: Run tests
+      run: swift test -v --enable-code-coverage
+    
+    - name: Generate coverage report
+      run: |
+        llvm-cov export \
+          .build/debug/DeepSeekKitPackageTests.xctest \
+          -instr-profile .build/debug/codecov/default.profdata \
+          -format lcov > coverage.lcov
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.lcov
+        flags: linux
+        name: linux-coverage
+        fail_ci_if_error: false
+
+  test-docker:
+    name: Test in Docker
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build Docker image
+      run: docker build -t deepseek-kit-test -f Dockerfile.dev .
+    
+    - name: Run tests in Docker
+      run: docker run --rm -v $(pwd):/app deepseek-kit-test swift test
+
+  lint:
+    name: SwiftLint
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install SwiftLint
+      run: brew install swiftlint
+    
+    - name: Run SwiftLint
+      run: swiftlint lint --strict || true
+
+  documentation:
+    name: Build Documentation
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_15.2.app
+    
+    - name: Build documentation
+      run: |
+        swift package --allow-writing-to-directory ./docs \
+          generate-documentation --target DeepSeekKit \
+          --disable-indexing \
+          --output-path ./docs
+    
+    - name: Upload documentation artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: documentation
+        path: docs
+
+  release:
+    name: Create Release Build
+    runs-on: macos-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_15.2.app
+    
+    - name: Build Release
+      run: swift build -c release
+    
+    - name: Create CLI binary
+      run: |
+        cp .build/release/deepseek-cli ./deepseek-cli-macos
+        chmod +x ./deepseek-cli-macos
+    
+    - name: Upload CLI binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: deepseek-cli-macos
+        path: deepseek-cli-macos
