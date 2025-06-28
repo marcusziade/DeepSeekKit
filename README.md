@@ -1,7 +1,7 @@
 # DeepSeekKit
 
 [![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
-[![Platforms](https://img.shields.io/badge/Platforms-Apple%20%7C%20Linux-blue.svg)](https://swift.org)
+[![Platforms](https://img.shields.io/badge/Platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20visionOS%20%7C%20Linux-blue.svg)](https://swift.org)
 [![CI](https://github.com/marcusziade/DeepSeekKit/actions/workflows/ci.yml/badge.svg)](https://github.com/marcusziade/DeepSeekKit/actions/workflows/ci.yml)
 [![Documentation](https://img.shields.io/badge/Documentation-DocC-orange)](https://marcusziade.github.io/DeepSeekKit/)
 
