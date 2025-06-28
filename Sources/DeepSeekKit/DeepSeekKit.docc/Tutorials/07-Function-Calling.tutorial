@@ -1,0 +1,249 @@
+@Tutorial(time: 25) {
+    @Intro(title: "Building AI Agents with Function Calling") {
+        Transform your AI into a powerful agent that can interact with external systems. Learn how to define tools, handle function calls, and build interactive AI applications.
+        
+        @Image(source: function-calling-intro.png, alt: "Function calling concept")
+    }
+    
+    @Section(title: "Understanding Function Calling") {
+        @ContentAndMedia {
+            Function calling allows the AI to interact with your code by calling functions you define. This enables building AI agents that can perform real actions.
+            
+            @Image(source: function-flow.png, alt: "Function calling flow diagram")
+        }
+        
+        @Steps {
+            @Step {
+                Understand the function calling workflow.
+                
+                @Code(name: "FunctionBasics.swift", file: functions-01-workflow.swift) {
+                    The AI decides when and how to call your functions.
+                }
+            }
+            
+            @Step {
+                Define a simple function tool.
+                
+                @Code(name: "FunctionBasics.swift", file: functions-02-tool.swift) {
+                    Tools describe functions the AI can call.
+                }
+            }
+            
+            @Step {
+                Use the FunctionBuilder for easier tool creation.
+                
+                @Code(name: "FunctionBasics.swift", file: functions-03-builder.swift) {
+                    FunctionBuilder provides a fluent API for tool definition.
+                }
+            }
+            
+            @Step {
+                Handle function call responses.
+                
+                @Code(name: "FunctionBasics.swift", file: functions-04-response.swift) {
+                    The AI tells you which function to call and with what arguments.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Building a Weather Assistant") {
+        @ContentAndMedia {
+            Let's build a practical example - a weather assistant that can check current weather and forecasts for any location.
+            
+            @Image(source: weather-assistant.png, alt: "Weather assistant interface")
+        }
+        
+        @Steps {
+            @Step {
+                Define weather-related functions.
+                
+                @Code(name: "WeatherAssistant.swift", file: functions-05-weather.swift) {
+                    Create tools for weather queries.
+                }
+            }
+            
+            @Step {
+                Implement the weather service.
+                
+                @Code(name: "WeatherAssistant.swift", file: functions-06-service.swift) {
+                    Actual implementation that fetches weather data.
+                }
+            }
+            
+            @Step {
+                Create the assistant view with function handling.
+                
+                @Code(name: "WeatherAssistant.swift", file: functions-07-assistant.swift) {
+                    Connect the AI to your weather functions.
+                }
+            }
+            
+            @Step {
+                Execute function calls and return results.
+                
+                @Code(name: "WeatherAssistant.swift", file: functions-08-execute.swift) {
+                    Complete the loop by sending results back to the AI.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Advanced Function Patterns") {
+        @ContentAndMedia {
+            Master advanced patterns for function calling including multi-step workflows, error handling, and complex parameter validation.
+            
+            @Image(source: advanced-functions.png, alt: "Advanced function patterns")
+        }
+        
+        @Steps {
+            @Step {
+                Implement multi-function workflows.
+                
+                @Code(name: "AdvancedFunctions.swift", file: functions-09-multi.swift) {
+                    Chain multiple function calls for complex tasks.
+                }
+            }
+            
+            @Step {
+                Add parameter validation.
+                
+                @Code(name: "AdvancedFunctions.swift", file: functions-10-validation.swift) {
+                    Ensure the AI provides valid function arguments.
+                }
+            }
+            
+            @Step {
+                Handle function errors gracefully.
+                
+                @Code(name: "AdvancedFunctions.swift", file: functions-11-errors.swift) {
+                    Report errors back to the AI for recovery.
+                }
+            }
+            
+            @Step {
+                Implement function result caching.
+                
+                @Code(name: "AdvancedFunctions.swift", file: functions-12-cache.swift) {
+                    Optimize repeated function calls.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Building a Smart Home Controller") {
+        @ContentAndMedia {
+            Create a comprehensive example - an AI-powered smart home controller that can manage lights, temperature, and security systems.
+            
+            @Image(source: smart-home.png, alt: "Smart home controller")
+        }
+        
+        @Steps {
+            @Step {
+                Define smart home device functions.
+                
+                @Code(name: "SmartHome.swift", file: functions-13-devices.swift) {
+                    Create tools for various home devices.
+                }
+            }
+            
+            @Step {
+                Build a device registry system.
+                
+                @Code(name: "SmartHome.swift", file: functions-14-registry.swift) {
+                    Manage available devices dynamically.
+                }
+            }
+            
+            @Step {
+                Implement natural language control.
+                
+                @Code(name: "SmartHome.swift", file: functions-15-control.swift) {
+                    Let users control devices conversationally.
+                }
+            }
+            
+            @Step {
+                Add automation suggestions.
+                
+                @Code(name: "SmartHome.swift", file: functions-16-automation.swift) {
+                    AI suggests smart automations based on usage.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            What happens when the AI decides to call a function?
+            
+            @Choice(isCorrect: false) {
+                The function executes automatically
+                
+                @Justification(reaction: "Not quite") {
+                    The AI only tells you which function to call. Your code must execute it.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                The AI returns a function call request for you to execute
+                
+                @Justification(reaction: "Exactly right!") {
+                    You receive the function name and arguments, then execute it yourself.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Nothing, functions are just documentation
+                
+                @Justification(reaction: "They're functional!") {
+                    Function tools enable real interactions between AI and your code.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                The AI writes code to implement the function
+                
+                @Justification(reaction: "Misunderstanding") {
+                    The AI uses existing functions you've defined, not create new ones.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            What must you do after executing a function call?
+            
+            @Choice(isCorrect: false) {
+                Nothing, the task is complete
+                
+                @Justification(reaction: "Incomplete workflow") {
+                    The AI needs to know the function result to continue the conversation.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                Send the function result back to the AI
+                
+                @Justification(reaction: "Perfect!") {
+                    This completes the function calling loop and lets the AI use the result.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Clear the conversation history
+                
+                @Justification(reaction: "Don't do this") {
+                    Conversation history is important for context.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Define new functions
+                
+                @Justification(reaction: "Not necessary") {
+                    Functions should be defined before the conversation starts.
+                }
+            }
+        }
+    }
+}

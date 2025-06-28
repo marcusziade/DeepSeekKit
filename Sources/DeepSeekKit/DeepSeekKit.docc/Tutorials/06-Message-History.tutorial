@@ -1,0 +1,247 @@
+@Tutorial(time: 20) {
+    @Intro(title: "Managing Message History") {
+        Build conversational AI applications by properly managing message history. Learn how to maintain context, optimize token usage, and create engaging multi-turn conversations.
+        
+        @Image(source: message-history-intro.png, alt: "Conversation history management")
+    }
+    
+    @Section(title: "Building Conversations") {
+        @ContentAndMedia {
+            Effective conversations require maintaining context across multiple interactions. Let's explore how to build and manage message histories.
+            
+            @Image(source: conversation-flow.png, alt: "Message flow in conversations")
+        }
+        
+        @Steps {
+            @Step {
+                Create a message history manager.
+                
+                @Code(name: "MessageHistory.swift", file: history-01-manager.swift) {
+                    Centralize message management for consistency.
+                }
+            }
+            
+            @Step {
+                Add messages with proper role assignment.
+                
+                @Code(name: "MessageHistory.swift", file: history-02-roles.swift) {
+                    Each message role serves a specific purpose.
+                }
+            }
+            
+            @Step {
+                Implement conversation continuity.
+                
+                @Code(name: "MessageHistory.swift", file: history-03-continuity.swift) {
+                    Maintain context between user interactions.
+                }
+            }
+            
+            @Step {
+                Create a conversation view with history.
+                
+                @Code(name: "MessageHistory.swift", file: history-04-view.swift) {
+                    Display the full conversation thread.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Context Window Management") {
+        @ContentAndMedia {
+            AI models have limited context windows. Learn strategies to manage long conversations while preserving important context.
+            
+            @Image(source: context-window.png, alt: "Context window visualization")
+        }
+        
+        @Steps {
+            @Step {
+                Implement token counting for messages.
+                
+                @Code(name: "ContextManagement.swift", file: history-05-tokens.swift) {
+                    Track token usage to stay within limits.
+                }
+            }
+            
+            @Step {
+                Create a sliding window strategy.
+                
+                @Code(name: "ContextManagement.swift", file: history-06-sliding.swift) {
+                    Keep recent messages while dropping old ones.
+                }
+            }
+            
+            @Step {
+                Implement smart message pruning.
+                
+                @Code(name: "ContextManagement.swift", file: history-07-pruning.swift) {
+                    Preserve important messages while removing redundant ones.
+                }
+            }
+            
+            @Step {
+                Add conversation summarization.
+                
+                @Code(name: "ContextManagement.swift", file: history-08-summary.swift) {
+                    Compress old messages into summaries.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Conversation Persistence") {
+        @ContentAndMedia {
+            Save and restore conversations to provide continuity across app sessions. Implement proper storage and retrieval mechanisms.
+            
+            @Image(source: persistence.png, alt: "Conversation persistence")
+        }
+        
+        @Steps {
+            @Step {
+                Make messages codable for storage.
+                
+                @Code(name: "Persistence.swift", file: history-09-codable.swift)
+            }
+            
+            @Step {
+                Implement Core Data storage.
+                
+                @Code(name: "Persistence.swift", file: history-10-coredata.swift) {
+                    Use Core Data for robust local storage.
+                }
+            }
+            
+            @Step {
+                Add conversation export functionality.
+                
+                @Code(name: "Persistence.swift", file: history-11-export.swift) {
+                    Let users save or share conversations.
+                }
+            }
+            
+            @Step {
+                Create a conversation browser.
+                
+                @Code(name: "Persistence.swift", file: history-12-browser.swift) {
+                    Browse and search through past conversations.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Advanced Conversation Features") {
+        @ContentAndMedia {
+            Enhance your conversational AI with advanced features like branching conversations, message editing, and conversation templates.
+            
+            @Image(source: advanced-conversations.png, alt: "Advanced conversation features")
+        }
+        
+        @Steps {
+            @Step {
+                Implement message editing.
+                
+                @Code(name: "AdvancedConversations.swift", file: history-13-editing.swift) {
+                    Allow users to edit and regenerate from any point.
+                }
+            }
+            
+            @Step {
+                Add conversation branching.
+                
+                @Code(name: "AdvancedConversations.swift", file: history-14-branching.swift) {
+                    Explore different conversation paths.
+                }
+            }
+            
+            @Step {
+                Create conversation templates.
+                
+                @Code(name: "AdvancedConversations.swift", file: history-15-templates.swift) {
+                    Preset conversations for common scenarios.
+                }
+            }
+            
+            @Step {
+                Implement conversation search.
+                
+                @Code(name: "AdvancedConversations.swift", file: history-16-search.swift) {
+                    Find specific messages or topics in history.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            What's the best strategy for managing very long conversations?
+            
+            @Choice(isCorrect: false) {
+                Send all messages every time
+                
+                @Justification(reaction: "Inefficient and expensive") {
+                    This wastes tokens and may exceed context limits. You need a smarter strategy.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Only send the last message
+                
+                @Justification(reaction: "Loses context") {
+                    The AI needs conversation context to provide relevant responses.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                Use sliding window with summarization
+                
+                @Justification(reaction: "Excellent strategy!") {
+                    This balances context preservation with token efficiency.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Start new conversation frequently
+                
+                @Justification(reaction: "Disrupts user experience") {
+                    Users expect continuity in their conversations.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            Which message role should you use to set the AI's behavior and personality?
+            
+            @Choice(isCorrect: true) {
+                system
+                
+                @Justification(reaction: "Correct!") {
+                    System messages define the AI's behavior, constraints, and personality.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                user
+                
+                @Justification(reaction: "Wrong role") {
+                    User messages contain the human's input, not AI configuration.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                assistant
+                
+                @Justification(reaction: "Not for configuration") {
+                    Assistant messages are the AI's responses, not configuration.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                function
+                
+                @Justification(reaction: "Different purpose") {
+                    Function messages are for function calling results, not behavior setting.
+                }
+            }
+        }
+    }
+}

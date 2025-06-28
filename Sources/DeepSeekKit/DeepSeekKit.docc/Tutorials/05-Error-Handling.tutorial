@@ -1,0 +1,243 @@
+@Tutorial(time: 15) {
+    @Intro(title: "Robust Error Handling") {
+        Build resilient applications by properly handling errors from the DeepSeek API. Learn to identify, handle, and recover from various error conditions.
+        
+        @Image(source: error-handling-intro.png, alt: "Error handling strategies")
+    }
+    
+    @Section(title: "Understanding DeepSeekError") {
+        @ContentAndMedia {
+            DeepSeekKit provides a comprehensive error type that covers all possible failure scenarios. Understanding these errors is crucial for building robust applications.
+            
+            @Image(source: error-types.png, alt: "DeepSeekError types")
+        }
+        
+        @Steps {
+            @Step {
+                Explore the DeepSeekError enum cases.
+                
+                @Code(name: "ErrorTypes.swift", file: errors-01-types.swift) {
+                    Each error case provides specific information about what went wrong.
+                }
+            }
+            
+            @Step {
+                Handle authentication errors.
+                
+                @Code(name: "ErrorTypes.swift", file: errors-02-auth.swift) {
+                    Invalid or missing API keys need special handling.
+                }
+            }
+            
+            @Step {
+                Deal with rate limiting.
+                
+                @Code(name: "ErrorTypes.swift", file: errors-03-ratelimit.swift) {
+                    Respect API limits and implement backoff strategies.
+                }
+            }
+            
+            @Step {
+                Handle API-specific errors with error codes.
+                
+                @Code(name: "ErrorTypes.swift", file: errors-04-api.swift) {
+                    The API may return specific error codes and messages.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Implementing Error Recovery") {
+        @ContentAndMedia {
+            Good error handling isn't just about showing error messages. Let's implement smart recovery strategies that improve user experience.
+            
+            @Image(source: error-recovery.png, alt: "Error recovery flow")
+        }
+        
+        @Steps {
+            @Step {
+                Create an error handler with recovery actions.
+                
+                @Code(name: "ErrorRecovery.swift", file: errors-05-handler.swift)
+            }
+            
+            @Step {
+                Implement exponential backoff for retries.
+                
+                @Code(name: "ErrorRecovery.swift", file: errors-06-backoff.swift) {
+                    Gradually increase delay between retry attempts.
+                }
+            }
+            
+            @Step {
+                Add circuit breaker pattern for repeated failures.
+                
+                @Code(name: "ErrorRecovery.swift", file: errors-07-circuit.swift) {
+                    Prevent cascading failures by temporarily disabling requests.
+                }
+            }
+            
+            @Step {
+                Create user-friendly error messages.
+                
+                @Code(name: "ErrorRecovery.swift", file: errors-08-messages.swift) {
+                    Transform technical errors into actionable user guidance.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Network Error Handling") {
+        @ContentAndMedia {
+            Network errors are common in mobile applications. Learn how to handle connectivity issues, timeouts, and other network-related problems gracefully.
+            
+            @Image(source: network-errors.png, alt: "Network error scenarios")
+        }
+        
+        @Steps {
+            @Step {
+                Detect network connectivity status.
+                
+                @Code(name: "NetworkErrors.swift", file: errors-09-connectivity.swift)
+            }
+            
+            @Step {
+                Handle timeout errors with custom durations.
+                
+                @Code(name: "NetworkErrors.swift", file: errors-10-timeout.swift) {
+                    Configure appropriate timeouts for different operations.
+                }
+            }
+            
+            @Step {
+                Implement offline mode with queuing.
+                
+                @Code(name: "NetworkErrors.swift", file: errors-11-offline.swift) {
+                    Queue requests when offline and sync when connected.
+                }
+            }
+            
+            @Step {
+                Add request caching for resilience.
+                
+                @Code(name: "NetworkErrors.swift", file: errors-12-cache.swift) {
+                    Cache successful responses for offline access.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Error Analytics and Monitoring") {
+        @ContentAndMedia {
+            Track and analyze errors to improve your application's reliability. Implement comprehensive error logging and monitoring.
+            
+            @Image(source: error-analytics.png, alt: "Error analytics dashboard")
+        }
+        
+        @Steps {
+            @Step {
+                Create an error logger.
+                
+                @Code(name: "ErrorAnalytics.swift", file: errors-13-logger.swift)
+            }
+            
+            @Step {
+                Track error patterns and frequency.
+                
+                @Code(name: "ErrorAnalytics.swift", file: errors-14-patterns.swift) {
+                    Identify common failure points in your app.
+                }
+            }
+            
+            @Step {
+                Implement error reporting to analytics services.
+                
+                @Code(name: "ErrorAnalytics.swift", file: errors-15-reporting.swift) {
+                    Send anonymized error data for analysis.
+                }
+            }
+            
+            @Step {
+                Create an error dashboard view.
+                
+                @Code(name: "ErrorAnalytics.swift", file: errors-16-dashboard.swift) {
+                    Help developers monitor app health in real-time.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            What's the best strategy for handling rate limit errors?
+            
+            @Choice(isCorrect: false) {
+                Retry immediately
+                
+                @Justification(reaction: "This will make it worse") {
+                    Immediate retries will likely hit the rate limit again and may get you banned.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                Implement exponential backoff
+                
+                @Justification(reaction: "Perfect approach!") {
+                    Exponential backoff gradually increases wait time, respecting the API's limits.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Show error and give up
+                
+                @Justification(reaction: "Too pessimistic") {
+                    Rate limits are temporary. Smart retry strategies can recover automatically.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Switch to a different API key
+                
+                @Justification(reaction: "Against terms of service") {
+                    Using multiple API keys to bypass rate limits violates most API terms.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            Which error requires user action to resolve?
+            
+            @Choice(isCorrect: true) {
+                Authentication error (invalid API key)
+                
+                @Justification(reaction: "Correct!") {
+                    Users must provide a valid API key. The app can't fix this automatically.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Network timeout
+                
+                @Justification(reaction: "Can retry automatically") {
+                    Timeouts are often temporary and can be retried without user intervention.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Rate limit exceeded
+                
+                @Justification(reaction: "Can wait and retry") {
+                    Rate limits reset over time. The app can wait and retry automatically.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Server error (500)
+                
+                @Justification(reaction: "Usually temporary") {
+                    Server errors are typically temporary and resolve without user action.
+                }
+            }
+        }
+    }
+}

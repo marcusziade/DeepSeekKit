@@ -1,0 +1,247 @@
+@Tutorial(time: 10) {
+    @Intro(title: "Understanding DeepSeek Models") {
+        Explore the different AI models available in DeepSeek and learn when to use each one. Understanding model capabilities helps you choose the right tool for your use case.
+        
+        @Image(source: models-intro.png, alt: "DeepSeek models overview")
+    }
+    
+    @Section(title: "Available Models") {
+        @ContentAndMedia {
+            DeepSeek offers different models optimized for various tasks. Let's explore each model and its strengths.
+            
+            @Image(source: model-comparison.png, alt: "Model comparison chart")
+        }
+        
+        @Steps {
+            @Step {
+                DeepSeekKit provides an enum for available models.
+                
+                @Code(name: "ModelExplorer.swift", file: models-01-enum.swift) {
+                    The DeepSeekModel enum ensures type safety when selecting models.
+                }
+            }
+            
+            @Step {
+                The chat model is perfect for general conversations and tasks.
+                
+                @Code(name: "ModelExplorer.swift", file: models-02-chat.swift) {
+                    Fast, efficient, and great for most use cases.
+                }
+            }
+            
+            @Step {
+                The reasoner model excels at complex reasoning and problem-solving.
+                
+                @Code(name: "ModelExplorer.swift", file: models-03-reasoner.swift) {
+                    Provides detailed reasoning steps for complex problems.
+                }
+            }
+            
+            @Step {
+                List all available models using the ModelService.
+                
+                @Code(name: "ModelExplorer.swift", file: models-04-list.swift) {
+                    Dynamically discover available models and their capabilities.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Choosing the Right Model") {
+        @ContentAndMedia {
+            Different models excel at different tasks. Let's build a model selector that helps choose the appropriate model based on the use case.
+            
+            @Image(source: model-selector.png, alt: "Model selection interface")
+        }
+        
+        @Steps {
+            @Step {
+                Create a view to explore different models.
+                
+                @Code(name: "ModelSelector.swift", file: models-05-selector.swift)
+            }
+            
+            @Step {
+                Add use case examples for each model.
+                
+                @Code(name: "ModelSelector.swift", file: models-06-usecases.swift) {
+                    Help users understand when to use each model.
+                }
+            }
+            
+            @Step {
+                Implement model switching in your chat interface.
+                
+                @Code(name: "ModelSelector.swift", file: models-07-switching.swift) {
+                    Allow users to switch models based on their needs.
+                }
+            }
+            
+            @Step {
+                Compare responses from different models.
+                
+                @Code(name: "ModelSelector.swift", file: models-08-comparison.swift) {
+                    See how different models approach the same problem.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Working with the Reasoner Model") {
+        @ContentAndMedia {
+            The reasoner model provides unique capabilities for complex problem-solving. It shows its thinking process, making it ideal for educational and analytical applications.
+            
+            @Image(source: reasoner-model.png, alt: "Reasoner model in action")
+        }
+        
+        @Steps {
+            @Step {
+                Access reasoning content in the response.
+                
+                @Code(name: "ReasonerExample.swift", file: models-09-reasoning.swift) {
+                    The reasoningContent field contains the model's thought process.
+                }
+            }
+            
+            @Step {
+                Display reasoning steps in your UI.
+                
+                @Code(name: "ReasonerExample.swift", file: models-10-reasoning-ui.swift) {
+                    Show users how the AI arrived at its conclusion.
+                }
+            }
+            
+            @Step {
+                Use reasoning for math problems.
+                
+                @Code(name: "ReasonerExample.swift", file: models-11-math.swift) {
+                    Perfect for educational apps that need to show work.
+                }
+            }
+            
+            @Step {
+                Implement a code analysis tool with reasoning.
+                
+                @Code(name: "ReasonerExample.swift", file: models-12-code-analysis.swift) {
+                    Understand why certain code improvements are suggested.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Model Performance and Costs") {
+        @ContentAndMedia {
+            Understanding model performance characteristics and costs helps you optimize your application for both user experience and budget.
+            
+            @Image(source: performance-costs.png, alt: "Performance and cost comparison")
+        }
+        
+        @Steps {
+            @Step {
+                Track token usage in responses.
+                
+                @Code(name: "UsageTracking.swift", file: models-13-usage.swift) {
+                    Monitor how many tokens each request consumes.
+                }
+            }
+            
+            @Step {
+                Implement a token counter for input.
+                
+                @Code(name: "UsageTracking.swift", file: models-14-counter.swift) {
+                    Estimate costs before sending requests.
+                }
+            }
+            
+            @Step {
+                Check your account balance.
+                
+                @Code(name: "UsageTracking.swift", file: models-15-balance.swift) {
+                    Keep track of your API credit balance.
+                }
+            }
+            
+            @Step {
+                Build a usage dashboard.
+                
+                @Code(name: "UsageTracking.swift", file: models-16-dashboard.swift) {
+                    Help users understand their AI usage patterns.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            Which model would you choose for a complex mathematical proof?
+            
+            @Choice(isCorrect: false) {
+                deepseek-chat
+                
+                @Justification(reaction: "Good, but not optimal") {
+                    While the chat model can handle math, the reasoner model is better for complex proofs.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                deepseek-reasoner
+                
+                @Justification(reaction: "Excellent choice!") {
+                    The reasoner model excels at complex reasoning tasks and can show its work step by step.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Either model equally
+                
+                @Justification(reaction: "Not quite") {
+                    The reasoner model is specifically optimized for complex reasoning tasks.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Neither model
+                
+                @Justification(reaction: "They can do it!") {
+                    DeepSeek models are capable of mathematical reasoning, especially the reasoner model.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            What unique field does the reasoner model provide in its responses?
+            
+            @Choice(isCorrect: false) {
+                extraContent
+                
+                @Justification(reaction: "Not the right field") {
+                    This field doesn't exist in DeepSeek responses.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                reasoningContent
+                
+                @Justification(reaction: "Correct!") {
+                    The reasoningContent field contains the model's step-by-step reasoning process.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                thoughtProcess
+                
+                @Justification(reaction: "Close, but not the actual name") {
+                    The field is called reasoningContent, not thoughtProcess.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                debugInfo
+                
+                @Justification(reaction: "Incorrect") {
+                    This field doesn't exist in DeepSeek responses.
+                }
+            }
+        }
+    }
+}

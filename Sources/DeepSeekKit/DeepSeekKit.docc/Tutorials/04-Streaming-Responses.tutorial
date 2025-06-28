@@ -1,0 +1,245 @@
+@Tutorial(time: 20) {
+    @Intro(title: "Streaming Responses in Real-Time") {
+        Learn how to implement streaming responses for a more interactive user experience. Instead of waiting for the complete response, show text as it's generated.
+        
+        @Image(source: streaming-intro.png, alt: "Streaming responses visualization")
+    }
+    
+    @Section(title: "Understanding Streaming") {
+        @ContentAndMedia {
+            Streaming allows you to receive and display AI responses as they're generated, creating a more engaging and responsive user experience.
+            
+            @Image(source: streaming-concept.png, alt: "How streaming works")
+        }
+        
+        @Steps {
+            @Step {
+                Compare standard vs streaming responses.
+                
+                @Code(name: "StreamingBasics.swift", file: streaming-01-comparison.swift) {
+                    Streaming provides immediate feedback to users.
+                }
+            }
+            
+            @Step {
+                DeepSeekKit uses AsyncSequence for streaming.
+                
+                @Code(name: "StreamingBasics.swift", file: streaming-02-async.swift) {
+                    Modern Swift concurrency makes streaming elegant.
+                }
+            }
+            
+            @Step {
+                Each chunk contains a delta with new content.
+                
+                @Code(name: "StreamingBasics.swift", file: streaming-03-chunks.swift) {
+                    Chunks arrive incrementally as the AI generates text.
+                }
+            }
+            
+            @Step {
+                Accumulate chunks to build the complete response.
+                
+                @Code(name: "StreamingBasics.swift", file: streaming-04-accumulate.swift) {
+                    Keep track of the full message as it builds.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Implementing a Streaming Chat") {
+        @ContentAndMedia {
+            Let's build a chat interface that displays responses in real-time as they're generated, similar to ChatGPT or other modern AI interfaces.
+            
+            @Image(source: streaming-chat.png, alt: "Streaming chat interface")
+        }
+        
+        @Steps {
+            @Step {
+                Create a streaming chat view with proper state management.
+                
+                @Code(name: "StreamingChatView.swift", file: streaming-05-view.swift)
+            }
+            
+            @Step {
+                Implement the streaming message handler.
+                
+                @Code(name: "StreamingChatView.swift", file: streaming-06-handler.swift) {
+                    Process each chunk as it arrives.
+                }
+            }
+            
+            @Step {
+                Add a typing indicator during streaming.
+                
+                @Code(name: "StreamingChatView.swift", file: streaming-07-indicator.swift) {
+                    Visual feedback shows the AI is "thinking".
+                }
+            }
+            
+            @Step {
+                Handle the end of streaming and finalize the message.
+                
+                @Code(name: "StreamingChatView.swift", file: streaming-08-finalize.swift) {
+                    Clean up the UI when streaming completes.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Error Handling in Streams") {
+        @ContentAndMedia {
+            Streaming introduces unique error handling challenges. Learn how to gracefully handle interruptions, network issues, and partial responses.
+            
+            @Image(source: streaming-errors.png, alt: "Error handling in streams")
+        }
+        
+        @Steps {
+            @Step {
+                Wrap streaming in proper error handling.
+                
+                @Code(name: "StreamingErrors.swift", file: streaming-09-errors.swift)
+            }
+            
+            @Step {
+                Handle network interruptions gracefully.
+                
+                @Code(name: "StreamingErrors.swift", file: streaming-10-network.swift) {
+                    Show partial content even if streaming fails.
+                }
+            }
+            
+            @Step {
+                Implement retry logic for failed streams.
+                
+                @Code(name: "StreamingErrors.swift", file: streaming-11-retry.swift) {
+                    Allow users to retry from where streaming stopped.
+                }
+            }
+            
+            @Step {
+                Add timeout handling for slow streams.
+                
+                @Code(name: "StreamingErrors.swift", file: streaming-12-timeout.swift) {
+                    Prevent infinite waiting on slow connections.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Advanced Streaming Features") {
+        @ContentAndMedia {
+            Take your streaming implementation to the next level with advanced features like token counting, speed control, and custom animations.
+            
+            @Image(source: advanced-streaming.png, alt: "Advanced streaming features")
+        }
+        
+        @Steps {
+            @Step {
+                Count tokens as they stream.
+                
+                @Code(name: "AdvancedStreaming.swift", file: streaming-13-tokens.swift) {
+                    Track usage in real-time for cost awareness.
+                }
+            }
+            
+            @Step {
+                Implement smooth text animation.
+                
+                @Code(name: "AdvancedStreaming.swift", file: streaming-14-animation.swift) {
+                    Create a typewriter effect for incoming text.
+                }
+            }
+            
+            @Step {
+                Add the ability to stop streaming mid-response.
+                
+                @Code(name: "AdvancedStreaming.swift", file: streaming-15-cancel.swift) {
+                    Give users control to stop long responses.
+                }
+            }
+            
+            @Step {
+                Stream multiple responses simultaneously.
+                
+                @Code(name: "AdvancedStreaming.swift", file: streaming-16-multiple.swift) {
+                    Compare different models or prompts side by side.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            What Swift feature does DeepSeekKit use for streaming responses?
+            
+            @Choice(isCorrect: true) {
+                AsyncSequence
+                
+                @Justification(reaction: "Correct!") {
+                    AsyncSequence is the modern Swift way to handle asynchronous streams of values.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Combine Publisher
+                
+                @Justification(reaction: "Not in this case") {
+                    While Combine could work, DeepSeekKit uses AsyncSequence for better async/await integration.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                NotificationCenter
+                
+                @Justification(reaction: "Too old school") {
+                    NotificationCenter isn't suitable for streaming data like this.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Delegate callbacks
+                
+                @Justification(reaction: "Not modern enough") {
+                    Delegates would be cumbersome for streaming. AsyncSequence is much cleaner.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            What should you do with streaming chunks to get the complete response?
+            
+            @Choice(isCorrect: false) {
+                Use only the last chunk
+                
+                @Justification(reaction: "You'll miss content") {
+                    Each chunk contains only a portion of the response. You need all chunks.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                Accumulate all chunks' delta content
+                
+                @Justification(reaction: "Exactly!") {
+                    Each chunk's delta contains new content that must be accumulated for the full response.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Use only the first chunk
+                
+                @Justification(reaction: "Very incomplete") {
+                    The first chunk typically contains just the beginning of the response.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Chunks are independent messages
+                
+                @Justification(reaction: "Misunderstanding") {
+                    Chunks are parts of a single response, not independent messages.
+                }
+            }
+        }
+    }
+}

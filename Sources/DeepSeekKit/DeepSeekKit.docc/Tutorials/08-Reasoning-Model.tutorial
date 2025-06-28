@@ -1,0 +1,243 @@
+@Tutorial(time: 20) {
+    @Intro(title: "Deep Reasoning with DeepSeek Reasoner") {
+        Unlock the power of DeepSeek's reasoning model for complex problem-solving. Learn how to leverage detailed reasoning steps for educational, analytical, and decision-making applications.
+        
+        @Image(source: reasoning-intro.png, alt: "Reasoning model visualization")
+    }
+    
+    @Section(title: "Understanding the Reasoner Model") {
+        @ContentAndMedia {
+            The DeepSeek Reasoner model provides transparent reasoning processes, showing how it arrives at conclusions. This is invaluable for educational and analytical applications.
+            
+            @Image(source: reasoning-process.png, alt: "Reasoning process flow")
+        }
+        
+        @Steps {
+            @Step {
+                Compare chat vs reasoner models.
+                
+                @Code(name: "ReasonerBasics.swift", file: reasoning-01-comparison.swift) {
+                    Reasoner provides step-by-step thinking process.
+                }
+            }
+            
+            @Step {
+                Access reasoning content in responses.
+                
+                @Code(name: "ReasonerBasics.swift", file: reasoning-02-content.swift) {
+                    The reasoningContent field contains the thought process.
+                }
+            }
+            
+            @Step {
+                Create a reasoning viewer UI.
+                
+                @Code(name: "ReasonerBasics.swift", file: reasoning-03-viewer.swift) {
+                    Display reasoning steps alongside the answer.
+                }
+            }
+            
+            @Step {
+                Handle both reasoning and final answer.
+                
+                @Code(name: "ReasonerBasics.swift", file: reasoning-04-both.swift) {
+                    Show users how the AI thinks and what it concludes.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Building a Math Tutor") {
+        @ContentAndMedia {
+            Create an educational math tutor that not only solves problems but explains each step, making it perfect for learning.
+            
+            @Image(source: math-tutor.png, alt: "Math tutor interface")
+        }
+        
+        @Steps {
+            @Step {
+                Set up the math tutor interface.
+                
+                @Code(name: "MathTutor.swift", file: reasoning-05-tutor.swift)
+            }
+            
+            @Step {
+                Format mathematical reasoning steps.
+                
+                @Code(name: "MathTutor.swift", file: reasoning-06-format.swift) {
+                    Present math steps in a clear, educational format.
+                }
+            }
+            
+            @Step {
+                Add step-by-step navigation.
+                
+                @Code(name: "MathTutor.swift", file: reasoning-07-steps.swift) {
+                    Let students explore each reasoning step.
+                }
+            }
+            
+            @Step {
+                Implement practice problem generation.
+                
+                @Code(name: "MathTutor.swift", file: reasoning-08-practice.swift) {
+                    Generate similar problems based on reasoning patterns.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Code Analysis with Reasoning") {
+        @ContentAndMedia {
+            Use the reasoner model to analyze code, explain algorithms, and suggest improvements with detailed justifications.
+            
+            @Image(source: code-analysis.png, alt: "Code analysis with reasoning")
+        }
+        
+        @Steps {
+            @Step {
+                Build a code analyzer interface.
+                
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-09-analyzer.swift)
+            }
+            
+            @Step {
+                Extract and display complexity analysis.
+                
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-10-complexity.swift) {
+                    Show how the AI analyzes algorithmic complexity.
+                }
+            }
+            
+            @Step {
+                Implement improvement suggestions.
+                
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-11-improvements.swift) {
+                    Provide justified code improvements.
+                }
+            }
+            
+            @Step {
+                Create a code review assistant.
+                
+                @Code(name: "CodeAnalyzer.swift", file: reasoning-12-review.swift) {
+                    Automated code reviews with reasoning.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Decision Support Systems") {
+        @ContentAndMedia {
+            Build applications that help users make informed decisions by showing the reasoning behind recommendations.
+            
+            @Image(source: decision-support.png, alt: "Decision support system")
+        }
+        
+        @Steps {
+            @Step {
+                Create a decision analysis framework.
+                
+                @Code(name: "DecisionSupport.swift", file: reasoning-13-framework.swift)
+            }
+            
+            @Step {
+                Visualize pros and cons reasoning.
+                
+                @Code(name: "DecisionSupport.swift", file: reasoning-14-proscons.swift) {
+                    Show balanced analysis of options.
+                }
+            }
+            
+            @Step {
+                Add confidence scoring to reasoning.
+                
+                @Code(name: "DecisionSupport.swift", file: reasoning-15-confidence.swift) {
+                    Extract confidence levels from reasoning.
+                }
+            }
+            
+            @Step {
+                Build a recommendation engine.
+                
+                @Code(name: "DecisionSupport.swift", file: reasoning-16-recommendations.swift) {
+                    Provide transparent recommendations.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            What unique capability does the reasoner model provide?
+            
+            @Choice(isCorrect: false) {
+                Faster response times
+                
+                @Justification(reaction: "Actually slower") {
+                    Reasoner models take more time due to detailed reasoning steps.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                Step-by-step reasoning process
+                
+                @Justification(reaction: "Exactly!") {
+                    The reasoner shows its thinking process, not just the final answer.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Better grammar
+                
+                @Justification(reaction: "Not the main difference") {
+                    Both models have similar language capabilities.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Image generation
+                
+                @Justification(reaction: "Wrong feature") {
+                    Neither model generates images; they're text-based.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            For which application is the reasoner model most valuable?
+            
+            @Choice(isCorrect: false) {
+                Simple chatbot responses
+                
+                @Justification(reaction: "Overkill") {
+                    Simple chats don't need detailed reasoning; use the chat model.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                Educational math problem solving
+                
+                @Justification(reaction: "Perfect use case!") {
+                    Students benefit from seeing step-by-step problem solving.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Real-time translations
+                
+                @Justification(reaction: "Not ideal") {
+                    Translation needs speed; reasoning adds unnecessary delay.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Generating marketing copy
+                
+                @Justification(reaction: "Unnecessary") {
+                    Creative writing doesn't benefit much from exposed reasoning.
+                }
+            }
+        }
+    }
+}

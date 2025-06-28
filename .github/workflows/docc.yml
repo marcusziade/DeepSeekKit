@@ -45,9 +45,9 @@ jobs:
           --output-path docs \
           --hosting-base-path DeepSeekKit
     
-    - name: Create Redirect Index
+    - name: Create Landing Page
       run: |
-        echo '<script>window.location.href += "/documentation/deepseekkit"</script>' > docs/index.html
+        swift Scripts/create_docs_index.swift
     
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3

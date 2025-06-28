@@ -1,0 +1,47 @@
+@Tutorials(name: "DeepSeekKit") {
+    @Intro(title: "Build AI-Powered Apps with DeepSeekKit") {
+        Learn how to integrate DeepSeek's powerful AI models into your Swift applications. These tutorials will guide you from basic setup to building advanced AI features.
+        
+        @Image(source: deepseekkit-hero.png, alt: "DeepSeekKit logo with gradient background")
+    }
+    
+    @Chapter(name: "Getting Started") {
+        Set up DeepSeekKit and create your first AI-powered application. Learn the fundamentals of working with DeepSeek's models.
+        
+        @Image(source: getting-started.png, alt: "Getting started with DeepSeekKit")
+        
+        @TutorialReference(tutorial: "doc:01-Setting-Up-DeepSeekKit")
+        @TutorialReference(tutorial: "doc:02-Your-First-Chat")
+        @TutorialReference(tutorial: "doc:03-Understanding-Models")
+    }
+    
+    @Chapter(name: "Core Features") {
+        Master the essential features of DeepSeekKit including streaming responses, handling errors, and working with different message types.
+        
+        @Image(source: core-features.png, alt: "Core features of DeepSeekKit")
+        
+        @TutorialReference(tutorial: "doc:04-Streaming-Responses")
+        @TutorialReference(tutorial: "doc:05-Error-Handling")
+        @TutorialReference(tutorial: "doc:06-Message-History")
+    }
+    
+    @Chapter(name: "Advanced AI Features") {
+        Unlock the full potential of DeepSeek's AI with function calling, reasoning models, and code completion.
+        
+        @Image(source: advanced-features.png, alt: "Advanced AI features")
+        
+        @TutorialReference(tutorial: "doc:07-Function-Calling")
+        @TutorialReference(tutorial: "doc:08-Reasoning-Model")
+        @TutorialReference(tutorial: "doc:09-Code-Completion")
+    }
+    
+    @Chapter(name: "Building Real Apps") {
+        Apply your knowledge to build complete, production-ready applications with DeepSeekKit.
+        
+        @Image(source: real-apps.png, alt: "Building real applications")
+        
+        @TutorialReference(tutorial: "doc:10-Chat-Interface")
+        @TutorialReference(tutorial: "doc:11-AI-Assistant")
+        @TutorialReference(tutorial: "doc:12-Code-Helper")
+    }
+}

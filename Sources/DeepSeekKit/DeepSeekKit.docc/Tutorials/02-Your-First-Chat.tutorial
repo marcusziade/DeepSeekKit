@@ -1,0 +1,253 @@
+@Tutorial(time: 15) {
+    @Intro(title: "Your First Chat with DeepSeek") {
+        Create your first AI-powered conversation using DeepSeekKit. Learn how to send messages, receive responses, and handle the chat completion API.
+        
+        @Image(source: first-chat-intro.png, alt: "Chat with DeepSeek AI")
+    }
+    
+    @Section(title: "Create a Simple Chat Request") {
+        @ContentAndMedia {
+            Let's start with the basics - sending a message to DeepSeek and receiving a response. We'll build a simple SwiftUI view that demonstrates the core chat functionality.
+            
+            @Image(source: simple-chat.png, alt: "Simple chat interface")
+        }
+        
+        @Steps {
+            @Step {
+                Start with a basic SwiftUI view structure.
+                
+                @Code(name: "ChatView.swift", file: chat-01-empty.swift)
+            }
+            
+            @Step {
+                Add the necessary imports and create a state for user input and response.
+                
+                @Code(name: "ChatView.swift", file: chat-02-state.swift) {
+                    We'll use @State for the UI and @StateObject for the client.
+                }
+            }
+            
+            @Step {
+                Create the UI with a text field and send button.
+                
+                @Code(name: "ChatView.swift", file: chat-03-ui.swift) {
+                    A simple interface for typing messages and displaying responses.
+                }
+            }
+            
+            @Step {
+                Implement the sendMessage function using DeepSeekKit.
+                
+                @Code(name: "ChatView.swift", file: chat-04-send.swift) {
+                    This creates a chat completion request and awaits the response.
+                }
+            }
+            
+            @Step {
+                Add loading state and disable the UI while processing.
+                
+                @Code(name: "ChatView.swift", file: chat-05-loading.swift) {
+                    Proper loading states improve the user experience.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Understanding Chat Messages") {
+        @ContentAndMedia {
+            DeepSeek's chat API uses a message-based format where each message has a role and content. Let's explore the different message types and how to use them effectively.
+            
+            @Image(source: message-roles.png, alt: "Different message roles")
+        }
+        
+        @Steps {
+            @Step {
+                DeepSeekKit provides convenient factory methods for creating messages.
+                
+                @Code(name: "MessageExamples.swift", file: chat-06-messages.swift) {
+                    Each role serves a specific purpose in the conversation.
+                }
+            }
+            
+            @Step {
+                System messages set the behavior and context for the AI.
+                
+                @Code(name: "ChatView.swift", file: chat-07-system.swift) {
+                    System messages help define the AI's personality and constraints.
+                }
+            }
+            
+            @Step {
+                Build a conversation with multiple messages.
+                
+                @Code(name: "ChatView.swift", file: chat-08-conversation.swift) {
+                    Messages form a conversation history that provides context.
+                }
+            }
+            
+            @Step {
+                Use assistant messages to provide examples or continue conversations.
+                
+                @Code(name: "ChatView.swift", file: chat-09-assistant.swift) {
+                    Assistant messages represent the AI's previous responses.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Customizing Chat Parameters") {
+        @ContentAndMedia {
+            ChatCompletionRequest offers many parameters to control the AI's behavior. Let's explore the most important ones.
+            
+            @Image(source: chat-parameters.png, alt: "Chat parameters visualization")
+        }
+        
+        @Steps {
+            @Step {
+                Control response randomness with temperature.
+                
+                @Code(name: "ChatView.swift", file: chat-10-temperature.swift) {
+                    Lower temperature (0.0-0.5) for focused responses, higher (0.5-1.0) for creativity.
+                }
+            }
+            
+            @Step {
+                Limit response length with maxTokens.
+                
+                @Code(name: "ChatView.swift", file: chat-11-tokens.swift) {
+                    Useful for controlling costs and ensuring concise responses.
+                }
+            }
+            
+            @Step {
+                Use stop sequences to control when the AI stops generating.
+                
+                @Code(name: "ChatView.swift", file: chat-12-stop.swift) {
+                    The AI will stop generating when it encounters these sequences.
+                }
+            }
+            
+            @Step {
+                Enable JSON mode for structured responses.
+                
+                @Code(name: "ChatView.swift", file: chat-13-json.swift) {
+                    Perfect for when you need to parse the AI's response programmatically.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Error Handling") {
+        @ContentAndMedia {
+            Network requests can fail, and it's important to handle errors gracefully. Let's implement proper error handling for our chat interface.
+            
+            @Image(source: error-handling.png, alt: "Error handling flow")
+        }
+        
+        @Steps {
+            @Step {
+                Add an error state to your view.
+                
+                @Code(name: "ChatView.swift", file: chat-14-error-state.swift)
+            }
+            
+            @Step {
+                Handle errors in the sendMessage function.
+                
+                @Code(name: "ChatView.swift", file: chat-15-error-handling.swift) {
+                    Catch and display errors to the user.
+                }
+            }
+            
+            @Step {
+                Handle specific DeepSeekError cases.
+                
+                @Code(name: "ChatView.swift", file: chat-16-specific-errors.swift) {
+                    Different errors require different handling strategies.
+                }
+            }
+            
+            @Step {
+                Add retry functionality for transient errors.
+                
+                @Code(name: "ChatView.swift", file: chat-17-retry.swift) {
+                    Allow users to retry after network or temporary failures.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            What is the purpose of the system message in a chat completion request?
+            
+            @Choice(isCorrect: true) {
+                To set the AI's behavior, personality, and constraints
+                
+                @Justification(reaction: "Exactly right!") {
+                    System messages define how the AI should behave throughout the conversation.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                To provide the user's input
+                
+                @Justification(reaction: "That's the user message") {
+                    User messages contain the actual questions or prompts from the user.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                To show the AI's previous responses
+                
+                @Justification(reaction: "Those are assistant messages") {
+                    Assistant messages represent the AI's responses in the conversation history.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                To handle errors
+                
+                @Justification(reaction: "Not quite") {
+                    Error handling is done through Swift's error handling mechanisms, not messages.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            What temperature value would you use for a creative writing assistant?
+            
+            @Choice(isCorrect: false) {
+                0.0
+                
+                @Justification(reaction: "Too deterministic") {
+                    Temperature 0.0 produces very predictable, repetitive outputs - not ideal for creativity.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                0.2
+                
+                @Justification(reaction: "Still too low") {
+                    This would produce focused but not very creative responses.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                0.8
+                
+                @Justification(reaction: "Perfect!") {
+                    Higher temperatures (0.7-0.9) encourage more creative and varied responses.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                2.0
+                
+                @Justification(reaction: "Out of range") {
+                    Temperature should be between 0.0 and 1.0. Values above 1.0 are not supported.
+                }
+            }
+        }
+    }
+}

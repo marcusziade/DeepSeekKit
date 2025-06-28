@@ -1,0 +1,203 @@
+@Tutorial(time: 10) {
+    @Intro(title: "Setting Up DeepSeekKit") {
+        Start your journey with DeepSeekKit by adding it to your project and configuring your API access. This tutorial will guide you through the installation process and initial setup.
+        
+        @Image(source: setup-intro.png, alt: "DeepSeekKit setup illustration")
+    }
+    
+    @Section(title: "Add DeepSeekKit to Your Project") {
+        @ContentAndMedia {
+            DeepSeekKit can be added to your project using Swift Package Manager, the modern dependency management solution for Swift projects.
+            
+            @Image(source: spm-integration.png, alt: "Swift Package Manager integration")
+        }
+        
+        @Steps {
+            @Step {
+                Open your project in Xcode and navigate to **File > Add Package Dependencies**.
+                
+                @Image(source: xcode-add-package.png, alt: "Xcode Add Package Dependencies menu")
+            }
+            
+            @Step {
+                Enter the DeepSeekKit repository URL in the search field.
+                
+                @Code(name: "Package URL", file: setup-01-url.txt)
+            }
+            
+            @Step {
+                Choose the version rule. For most projects, "Up to Next Major Version" is recommended.
+                
+                @Image(source: version-selection.png, alt: "Version selection in Xcode")
+            }
+            
+            @Step {
+                Add DeepSeekKit to your desired targets and click **Add Package**.
+                
+                @Image(source: target-selection.png, alt: "Target selection for DeepSeekKit")
+            }
+            
+            @Step {
+                Alternatively, if you're using Package.swift, add DeepSeekKit as a dependency.
+                
+                @Code(name: "Package.swift", file: setup-02-package.swift)
+            }
+        }
+    }
+    
+    @Section(title: "Obtain Your API Key") {
+        @ContentAndMedia {
+            To use DeepSeek's AI models, you'll need an API key. Let's walk through obtaining and securely storing your credentials.
+            
+            @Image(source: api-key-setup.png, alt: "API key configuration")
+        }
+        
+        @Steps {
+            @Step {
+                Visit the [DeepSeek Platform](https://platform.deepseek.com) and sign in to your account.
+                
+                @Image(source: deepseek-platform.png, alt: "DeepSeek platform homepage")
+            }
+            
+            @Step {
+                Navigate to the API Keys section in your account settings.
+                
+                @Image(source: api-keys-section.png, alt: "API Keys section in settings")
+            }
+            
+            @Step {
+                Create a new API key and copy it to your clipboard. Remember to keep this key secure!
+                
+                @Image(source: create-api-key.png, alt: "Creating a new API key")
+            }
+            
+            @Step {
+                For development, create an environment variable to store your API key securely. Never hardcode API keys in your source code.
+                
+                @Code(name: "Terminal", file: setup-03-env.sh)
+            }
+            
+            @Step {
+                For production iOS apps, use the Keychain to store sensitive data. Here's a simple helper.
+                
+                @Code(name: "KeychainHelper.swift", file: setup-04-keychain.swift) {
+                    A basic Keychain wrapper to securely store your API key.
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Initialize DeepSeekKit") {
+        @ContentAndMedia {
+            With DeepSeekKit added to your project and your API key ready, let's create your first client instance.
+            
+            @Image(source: initialization.png, alt: "Initializing DeepSeekKit")
+        }
+        
+        @Steps {
+            @Step {
+                Import DeepSeekKit in your Swift file.
+                
+                @Code(name: "ContentView.swift", file: setup-05-import.swift)
+            }
+            
+            @Step {
+                Create a DeepSeekClient instance with your API key.
+                
+                @Code(name: "ContentView.swift", file: setup-06-client.swift) {
+                    The client is your gateway to all DeepSeek services.
+                }
+            }
+            
+            @Step {
+                For SwiftUI apps, you might want to use @StateObject for your client.
+                
+                @Code(name: "ContentView.swift", file: setup-07-stateobject.swift) {
+                    This ensures the client persists across view updates.
+                }
+            }
+            
+            @Step {
+                Configure additional options if needed, such as custom base URL or timeout.
+                
+                @Code(name: "ContentView.swift", file: setup-08-configuration.swift) {
+                    DeepSeekConfiguration provides full control over the client behavior.
+                }
+            }
+        }
+    }
+    
+    @Assessments {
+        @MultipleChoice {
+            What is the recommended way to store your API key in a production iOS app?
+            
+            @Choice(isCorrect: false) {
+                Hardcode it in your source code
+                
+                @Justification(reaction: "Never do this!") {
+                    Hardcoding API keys in source code is a security risk. Anyone with access to your code can see and misuse your key.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Store it in UserDefaults
+                
+                @Justification(reaction: "Not secure enough") {
+                    UserDefaults is not encrypted and can be accessed by other apps or through device backups.
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                Use the iOS Keychain
+                
+                @Justification(reaction: "Correct!") {
+                    The Keychain provides encrypted storage for sensitive data and is the recommended approach for storing API keys and passwords.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Save it in a plist file
+                
+                @Justification(reaction: "Also insecure") {
+                    Plist files in your app bundle are readable by anyone who can access your app's files.
+                }
+            }
+        }
+        
+        @MultipleChoice {
+            Which dependency manager does DeepSeekKit support?
+            
+            @Choice(isCorrect: true) {
+                Swift Package Manager
+                
+                @Justification(reaction: "That's right!") {
+                    DeepSeekKit is distributed via Swift Package Manager, Apple's official dependency management solution.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                CocoaPods only
+                
+                @Justification(reaction: "Not quite") {
+                    DeepSeekKit uses Swift Package Manager, not CocoaPods.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Carthage only
+                
+                @Justification(reaction: "Incorrect") {
+                    DeepSeekKit is available through Swift Package Manager.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                Manual integration only
+                
+                @Justification(reaction: "There's a better way") {
+                    While you could manually integrate it, Swift Package Manager makes it much easier.
+                }
+            }
+        }
+    }
+}
