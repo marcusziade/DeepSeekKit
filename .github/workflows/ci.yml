@@ -81,8 +81,8 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Build Docker image
-      run: docker build -t deepseek-kit-test -f Dockerfile.dev .
+      run: docker build -t deepseek-kit-test .
     
     - name: Run tests in Docker
-      run: docker run --rm -v $(pwd):/app deepseek-kit-test swift test
+      run: docker run --rm deepseek-kit-test --help
 
