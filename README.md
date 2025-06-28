@@ -75,6 +75,17 @@ deepseek-cli stream "Tell me a story" --show-reasoning
 deepseek-cli balance
 ```
 
+### Docker
+
+```bash
+# Build and run
+docker build -t deepseek-kit .
+docker run --rm -e DEEPSEEK_API_KEY="your-key" deepseek-kit chat "Hello from Docker!"
+
+# Verify installation
+./Scripts/verify-docker.sh
+```
+
 ## Documentation
 
 [Interactive tutorials and API documentation →](https://marcusziade.github.io/DeepSeekKit/)
