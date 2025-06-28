@@ -46,7 +46,8 @@ public final class CURLStreamingHandler: StreamingHandler {
                     // Build cURL command
                     let curlCommand = buildCURLCommand(
                         url: url.absoluteString,
-                        body: bodyString
+                        body: bodyString,
+                        apiKey: apiKey
                     )
                     
                     // Execute cURL process
@@ -108,7 +109,7 @@ public final class CURLStreamingHandler: StreamingHandler {
         }
     }
     
-    private func buildCURLCommand(url: String, body: String) -> String {
+    private func buildCURLCommand(url: String, body: String, apiKey: String) -> String {
         // Escape single quotes in body
         let escapedBody = body.replacingOccurrences(of: "'", with: "'\\''")
         
