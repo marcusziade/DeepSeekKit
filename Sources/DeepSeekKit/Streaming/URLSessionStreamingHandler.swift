@@ -1,7 +1,31 @@
 #if canImport(Darwin)
 import Foundation
 
-/// Native URLSession-based streaming handler for Apple platforms
+/// URLSession-based streaming implementation for Apple platforms.
+///
+/// This handler provides native streaming support using URLSession's async/await
+/// capabilities, offering optimal performance and integration on iOS, macOS, tvOS,
+/// watchOS, and visionOS.
+///
+/// ## Features
+/// - Native async/await streaming with `URLSession.bytes`
+/// - Automatic task cancellation on stream termination
+/// - Server-sent events (SSE) parsing
+/// - Proper error propagation and handling
+///
+/// ## Implementation Details
+/// The handler:
+/// 1. Creates an async stream for the response
+/// 2. Processes server-sent events line by line
+/// 3. Parses JSON chunks from the event data
+/// 4. Handles special `[DONE]` markers
+/// 5. Provides automatic cleanup on cancellation
+///
+/// ## Platform Availability
+/// This implementation is only available on Apple platforms that support
+/// URLSession's async streaming APIs (iOS 15.0+, macOS 12.0+, etc.)
+///
+/// - Note: For Linux support, see `CURLStreamingHandler`.
 public final class URLSessionStreamingHandler: StreamingHandler {
     public init() {}
     

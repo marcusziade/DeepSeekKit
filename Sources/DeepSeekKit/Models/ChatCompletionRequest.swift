@@ -1,50 +1,94 @@
 import Foundation
 
-/// Request configuration for creating a chat completion.
+/// Configuration for requesting chat completions from DeepSeek models.
+///
+/// `ChatCompletionRequest` encapsulates all parameters needed to generate AI responses,
+/// from basic conversations to complex tool-using agents.
+///
+/// ## Basic Usage
+/// ```swift
+/// let request = ChatCompletionRequest(
+///     model: .chat,
+///     messages: [
+///         .system("You are a helpful assistant"),
+///         .user("Explain quantum computing")
+///     ]
+/// )
+/// ```
+///
+/// ## Advanced Features
+/// ```swift
+/// let advancedRequest = ChatCompletionRequest(
+///     model: .chat,
+///     messages: messages,
+///     temperature: 0.7,
+///     maxTokens: 1000,
+///     stream: true,
+///     responseFormat: .json,
+///     tools: [weatherTool, calculatorTool],
+///     toolChoice: .auto
+/// )
+/// ```
+///
+/// ## Model-Specific Constraints
+/// - The `reasoner` model doesn't support: `temperature`, `topP`, `frequencyPenalty`, `presencePenalty`
+/// - Function calling is available for both models
+/// - Streaming is supported by both models
+///
+/// - Important: Always check the model's capabilities before using advanced parameters.
 public struct ChatCompletionRequest: Codable, Sendable {
-    /// The model ID to use.
+    /// The AI model to use for completion. See ``DeepSeekModel`` for available options.
     public let model: DeepSeekModel
     
-    /// The messages in the conversation.
+    /// The conversation history as an array of messages. Messages should be in chronological order.
     public let messages: [ChatMessage]
     
-    /// The sampling temperature (0-2). Not supported for reasoner model.
+    /// Controls randomness in the output (0.0 to 2.0).
+    /// - 0.0: Deterministic, always picks the most likely token
+    /// - 1.0: Default sampling
+    /// - 2.0: Maximum randomness
+    /// - Note: Not supported by the reasoner model.
     public let temperature: Double?
     
-    /// Nucleus sampling probability (0-1). Not supported for reasoner model.
+    /// Nucleus sampling cutoff (0.0 to 1.0). The model considers tokens with top_p probability mass.
+    /// - Note: Not supported by the reasoner model.
     public let topP: Double?
     
-    /// Maximum tokens to generate.
+    /// Maximum number of tokens to generate. Defaults to model's maximum if not specified.
     public let maxTokens: Int?
     
-    /// Whether to stream the response.
+    /// Enable streaming to receive tokens as they're generated. Useful for real-time display.
     public let stream: Bool?
     
-    /// Sequences that will stop generation.
+    /// Stop sequences that will halt generation when encountered. Can be a single string or array.
     public let stop: StringOrArray?
     
-    /// Frequency penalty (-2 to 2). Not supported for reasoner model.
+    /// Penalizes tokens based on their frequency in the output (-2.0 to 2.0).
+    /// Positive values decrease likelihood of repetition.
+    /// - Note: Not supported by the reasoner model.
     public let frequencyPenalty: Double?
     
-    /// Presence penalty (-2 to 2). Not supported for reasoner model.
+    /// Penalizes tokens based on whether they've appeared (-2.0 to 2.0).
+    /// Positive values encourage new topics.
+    /// - Note: Not supported by the reasoner model.
     public let presencePenalty: Double?
     
-    /// Response format configuration.
+    /// Enforces a specific output format. Use `.json` for structured data generation.
     public let responseFormat: ResponseFormat?
     
-    /// Available tools/functions.
+    /// Functions/tools the model can call. Enables agent-like behavior with external capabilities.
     public let tools: [Tool]?
     
-    /// Tool selection strategy.
+    /// Strategy for tool selection. Use `.auto` to let the model decide, or force specific tools.
     public let toolChoice: ToolChoice?
     
-    /// Whether to return log probabilities.
+    /// Request log probabilities for tokens. Useful for analyzing model confidence.
     public let logprobs: Bool?
     
-    /// Number of top log probabilities to return (0-20).
+    /// Number of most likely tokens to return log probabilities for (0-20).
     public let topLogprobs: Int?
     
-    /// Creates a new chat completion request.
+    /// Creates a new chat completion request with the specified parameters.
     public init(
         model: DeepSeekModel,
         messages: [ChatMessage],
@@ -95,9 +139,48 @@ public struct ChatCompletionRequest: Codable, Sendable {
     }
 }
 
-/// DeepSeek model identifiers.
+/// Available DeepSeek model identifiers.
+///
+/// DeepSeek provides two primary models with different capabilities:
+///
+/// ## Chat Model
+/// The standard chat model (`deepseek-chat`) is optimized for:
+/// - Fast response times
+/// - General conversational AI
+/// - Code generation and assistance
+/// - Creative writing
+/// - Question answering
+///
+/// ## Reasoning Model
+/// The reasoning model (`deepseek-reasoner`) excels at:
+/// - Complex mathematical problems
+/// - Multi-step logical reasoning
+/// - Scientific analysis
+/// - Strategic planning
+/// - Detailed explanations
+///
+/// ### Usage Example
+/// ```swift
+/// // Use the chat model for general conversations
+/// let chatRequest = ChatCompletionRequest(
+///     model: .chat,
+///     messages: [.user("Tell me a joke")]
+/// )
+///
+/// // Use the reasoning model for complex problems
+/// let reasoningRequest = ChatCompletionRequest(
+///     model: .reasoner,
+///     messages: [.user("Prove that the sum of angles in a triangle is 180 degrees")]
+/// )
+/// ```
+///
+/// - Note: The reasoning model may have longer response times but provides
+///   more thorough analysis with step-by-step reasoning.
 public enum DeepSeekModel: String, Codable, Sendable {
+    /// Standard chat model for general-purpose conversations.
     case chat = "deepseek-chat"
+    
+    /// Advanced reasoning model for complex problem-solving.
     case reasoner = "deepseek-reasoner"
 }
 

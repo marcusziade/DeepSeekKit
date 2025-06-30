@@ -1,6 +1,24 @@
 import Foundation
 
-/// Implementation of the chat service.
+/// Default implementation of the chat service protocol.
+///
+/// `ChatService` handles all chat-related API interactions with the DeepSeek platform,
+/// including both standard and streaming completions. It manages request building,
+/// network communication, and response parsing.
+///
+/// ## Features
+/// - Standard chat completions with full response
+/// - Streaming chat completions for real-time output
+/// - Automatic handling of model-specific constraints
+/// - Platform-optimized streaming implementations
+///
+/// ## Implementation Details
+/// The service uses dependency injection for flexibility:
+/// - `NetworkingProtocol` for standard HTTP requests
+/// - `StreamingHandler` for server-sent events
+/// - `RequestBuilder` for constructing API requests
+///
+/// - Note: This class is internal and accessed through `DeepSeekClient.chat`.
 final class ChatService: ChatServiceProtocol {
     private let networking: NetworkingProtocol
     private let requestBuilder: RequestBuilder

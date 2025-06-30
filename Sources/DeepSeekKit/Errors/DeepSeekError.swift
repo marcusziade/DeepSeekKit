@@ -1,41 +1,82 @@
 import Foundation
 
-/// Errors that can occur when using the DeepSeek SDK.
+/// Comprehensive error types for DeepSeek API interactions.
+///
+/// `DeepSeekError` provides detailed error information to help diagnose and handle
+/// various failure scenarios when interacting with the DeepSeek API.
+///
+/// ## Error Categories
+///
+/// ### Authentication Errors
+/// - `invalidAPIKey`: The provided API key is invalid or missing
+///
+/// ### Network Errors
+/// - `networkError`: Low-level network failures (no connection, DNS issues)
+/// - `timeout`: Request exceeded the timeout threshold
+/// - `httpError`: HTTP-level errors with status codes
+///
+/// ### API Errors
+/// - `apiError`: Server returned an error response with details
+/// - `rateLimitExceeded`: Too many requests in a time window
+/// - `insufficientBalance`: Account balance too low for request
+/// - `serviceUnavailable`: DeepSeek service is temporarily down
+///
+/// ### Data Errors
+/// - `decodingError`: Failed to parse server response
+/// - `encodingError`: Failed to encode request data
+/// - `invalidRequest`: Request validation failed
+///
+/// ### Streaming Errors
+/// - `streamingError`: Issues during server-sent event streaming
+///
+/// ## Error Handling Example
+/// ```swift
+/// do {
+///     let response = try await client.chat.createCompletion(request)
+/// } catch DeepSeekError.rateLimitExceeded {
+///     // Wait and retry
+///     await Task.sleep(nanoseconds: 60_000_000_000)
+/// } catch DeepSeekError.apiError(let apiError) {
+///     print("API Error: \(apiError.message)")
+/// } catch DeepSeekError.networkError(let error) {
+///     print("Network failed: \(error)")
+/// }
+/// ```
 public enum DeepSeekError: LocalizedError, Sendable {
-    /// Invalid API key provided.
+    /// Invalid or missing API key. Ensure you've provided a valid API key from your DeepSeek account.
     case invalidAPIKey
     
-    /// Network request failed.
+    /// Low-level network error occurred. Check internet connection and network settings.
     case networkError(Error)
     
-    /// Server returned an error response.
+    /// DeepSeek API returned an error response. Contains detailed error information from the server.
     case apiError(APIError)
     
-    /// Failed to decode the response.
+    /// Failed to decode the server response. May indicate API changes or data corruption.
     case decodingError(Error)
     
-    /// Failed to encode the request.
+    /// Failed to encode the request data. Check that all parameters are valid.
     case encodingError(Error)
     
-    /// Invalid request configuration.
+    /// Request validation failed. The message contains details about what's invalid.
     case invalidRequest(String)
     
-    /// Rate limit exceeded.
+    /// Rate limit exceeded. Wait before making more requests.
     case rateLimitExceeded
     
-    /// Insufficient balance.
+    /// Account balance insufficient for this request. Top up your DeepSeek account.
     case insufficientBalance
     
-    /// Service temporarily unavailable.
+    /// DeepSeek service is temporarily unavailable. Try again later.
     case serviceUnavailable
     
-    /// Request timeout.
+    /// Request timed out. Consider using streaming for long responses.
     case timeout
     
-    /// Streaming error.
+    /// Error occurred during streaming response. Message contains specific details.
     case streamingError(String)
     
-    /// HTTP error with status code.
+    /// HTTP error with specific status code. Check status code for more details.
     case httpError(statusCode: Int)
     
     public var errorDescription: String? {

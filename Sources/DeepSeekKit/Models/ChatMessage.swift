@@ -1,6 +1,50 @@
 import Foundation
 
-/// Represents a message in a chat conversation.
+/// A message in a chat conversation between users, assistants, systems, or tools.
+///
+/// `ChatMessage` represents a single message in a conversation thread. Messages can
+/// come from different roles and may include tool interactions for function calling.
+///
+/// ## Message Roles
+/// - **System**: Sets the assistant's behavior and context
+/// - **User**: Input from the human user
+/// - **Assistant**: Responses from the AI model
+/// - **Tool**: Results from function/tool execution
+///
+/// ## Basic Usage
+/// ```swift
+/// // User message
+/// let userMsg = ChatMessage(role: .user, content: "What's the weather?")
+///
+/// // System message
+/// let systemMsg = ChatMessage(
+///     role: .system,
+///     content: "You are a helpful weather assistant."
+/// )
+///
+/// // Assistant message with tool calls
+/// let assistantMsg = ChatMessage(
+///     role: .assistant,
+///     content: "I'll check the weather for you.",
+///     toolCalls: [
+///         ToolCall(
+///             id: "call_123",
+///             type: "function",
+///             function: FunctionCall(name: "get_weather", arguments: "{\"location\":\"NYC\"}")
+///         )
+///     ]
+/// )
+/// ```
+///
+/// ## Convenience Initializers
+/// Use the extension methods for cleaner message creation:
+/// ```swift
+/// let messages: [ChatMessage] = [
+///     .system("You are a helpful assistant"),
+///     .user("Hello!"),
+///     .assistant("Hi! How can I help you today?")
+/// ]
+/// ```
 public struct ChatMessage: Codable, Sendable, Equatable {
     /// The role of the message author.
     public let role: MessageRole

@@ -1,7 +1,39 @@
 #if os(Linux)
 import Foundation
 
-/// Handles streaming responses using cURL for true HTTP streaming support on Linux.
+/// cURL-based streaming implementation for Linux platforms.
+///
+/// Since Linux's URLSession doesn't support streaming responses, this handler
+/// uses cURL directly to provide true HTTP streaming capabilities with server-sent
+/// events (SSE) support.
+///
+/// ## Features
+/// - Direct cURL integration for streaming
+/// - Server-sent events (SSE) parsing
+/// - Chunked transfer encoding support
+/// - Process-based isolation for safety
+/// - Automatic cleanup and error handling
+///
+/// ## Implementation Strategy
+/// The handler spawns a cURL process to handle the HTTP connection, capturing
+/// its output and parsing the server-sent events stream. This approach provides:
+/// - True streaming without buffering entire responses
+/// - Compatibility with standard Linux distributions
+/// - Minimal dependencies (only requires cURL)
+///
+/// ## Security Considerations
+/// - API keys are passed via headers, not command line arguments
+/// - Process output is carefully parsed to prevent injection
+/// - Automatic process termination on stream cancellation
+///
+/// ## Error Handling
+/// The handler gracefully handles:
+/// - cURL process failures
+/// - Network interruptions
+/// - Malformed SSE data
+/// - JSON parsing errors
+///
+/// - Note: Requires cURL to be installed on the system.
 public final class CURLStreamingHandler: StreamingHandler {
     private let decoder: JSONDecoder
     

@@ -1,32 +1,79 @@
 import Foundation
 
-/// Represents a tool/function that the model can use.
+/// Represents a tool or function that the AI model can invoke during conversations.
+///
+/// Tools enable AI models to perform actions beyond text generation, such as:
+/// - Retrieving real-time data (weather, stock prices)
+/// - Performing calculations
+/// - Interacting with external systems
+/// - Executing custom business logic
+///
+/// ## Example
+/// ```swift
+/// let weatherTool = Tool(
+///     function: FunctionDefinition(
+///         name: "get_weather",
+///         description: "Get current weather for a location",
+///         parameters: [
+///             "type": "object",
+///             "properties": [
+///                 "location": [
+///                     "type": "string",
+///                     "description": "City and state, e.g. San Francisco, CA"
+///                 ]
+///             ],
+///             "required": ["location"]
+///         ]
+///     )
+/// )
+/// ```
 public struct Tool: Codable, Sendable {
-    /// The type of tool (currently only "function").
+    /// The type of tool. Currently only "function" is supported.
     public let type: String
     
-    /// The function definition.
+    /// The function definition containing name, description, and parameters.
     public let function: FunctionDefinition
     
-    /// Creates a new tool.
+    /// Creates a new tool with the specified function definition.
+    /// - Parameter function: The function definition for this tool.
     public init(function: FunctionDefinition) {
         self.type = "function"
         self.function = function
     }
 }
 
-/// Defines a function that can be called by the model.
+/// Defines a function that can be called by the AI model.
+///
+/// Function definitions follow the JSON Schema specification for parameters,
+/// allowing you to specify complex parameter structures with validation rules.
+///
+/// ## Parameter Schema
+/// The `parameters` dictionary should follow JSON Schema format:
+/// - `type`: The parameter type ("object", "array", "string", etc.)
+/// - `properties`: Object properties (for object types)
+/// - `required`: Array of required property names
+/// - `description`: Human-readable descriptions
+///
+/// ## Best Practices
+/// - Use clear, descriptive function names
+/// - Provide detailed descriptions to help the model understand when to use the function
+/// - Define all parameters clearly with appropriate types and constraints
+/// - Mark required parameters explicitly
 public struct FunctionDefinition: Codable, Sendable {
-    /// The name of the function.
+    /// The name of the function. Should be a valid identifier (letters, numbers, underscores).
     public let name: String
     
-    /// A description of what the function does.
+    /// A clear description of what the function does. This helps the model decide when to use it.
     public let description: String
     
-    /// The parameters the function accepts (JSON Schema).
+    /// The parameters schema in JSON Schema format. Defines the structure and validation rules for function parameters.
     public let parameters: [String: Any]
     
     /// Creates a new function definition.
+    /// - Parameters:
+    ///   - name: The function name (e.g., "get_weather", "search_database")
+    ///   - description: A clear description of the function's purpose
+    ///   - parameters: JSON Schema defining the function's parameters
     public init(name: String, description: String, parameters: [String: Any]) {
         self.name = name
         self.description = description

@@ -1,6 +1,36 @@
 import Foundation
 
-/// A builder for creating function definitions with a more Swift-friendly API.
+/// A fluent builder for creating function definitions with a Swift-friendly API.
+///
+/// `FunctionBuilder` provides a convenient way to construct function definitions
+/// without manually creating JSON Schema structures. It supports common parameter
+/// types and handles the complexity of building valid schemas.
+///
+/// ## Example Usage
+/// ```swift
+/// let function = FunctionBuilder(
+///     name: "search_products",
+///     description: "Search for products in the catalog"
+/// )
+/// .addStringParameter("query", description: "Search query", required: true)
+/// .addNumberParameter("maxPrice", description: "Maximum price filter")
+/// .addStringParameter("category", description: "Product category", enum: ["electronics", "clothing", "books"])
+/// .addBooleanParameter("inStock", description: "Only show in-stock items")
+/// .build()
+///
+/// let tool = Tool(function: function)
+/// ```
+///
+/// ## Supported Parameter Types
+/// - **String**: Text parameters with optional enum constraints
+/// - **Number**: Numeric parameters (integers or decimals)
+/// - **Boolean**: True/false parameters
+/// - **Array**: Lists of values
+/// - **Object**: Nested object structures
+///
+/// ## Chaining
+/// All parameter addition methods return `self`, allowing for fluent chaining
+/// of multiple parameters in a single expression.
 public struct FunctionBuilder {
     private var name: String
     private var description: String
