@@ -1,1 +1,1 @@
-https://github.com/marcusziade/DeepSeekKit.git
+https://github.com/guitaripod/DeepSeekKit.git

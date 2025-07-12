@@ -56,13 +56,13 @@ Add DeepSeekKit to your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/marcusziade/DeepSeekKit.git", from: "1.0.0")
+    .package(url: "https://github.com/guitaripod/DeepSeekKit.git", from: "1.0.0")
 ]
 ```
 
 Or add it through Xcode:
 1. File → Add Package Dependencies
-2. Enter the repository URL: `https://github.com/marcusziade/DeepSeekKit.git`
+2. Enter the repository URL: `https://github.com/guitaripod/DeepSeekKit.git`
 3. Select version `1.0.0` or later
 
 ## Quick Start
